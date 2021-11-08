@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Traumato{% endblock %}
+
+{% block body %}
+    <h1>Create new Traumato</h1>
+
+    {{ include('traumato/_form.html.twig') }}
+
+    <a href="{{ path('traumato_index') }}">back to list</a>
+{% endblock %}

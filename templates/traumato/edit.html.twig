@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Traumato{% endblock %}
+
+{% block body %}
+    <h1>Edit Traumato</h1>
+
+    {{ include('traumato/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('traumato_index') }}">back to list</a>
+
+    {{ include('traumato/_delete_form.html.twig') }}
+{% endblock %}

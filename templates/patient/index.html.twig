@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Patient index{% endblock %}
+
+{% block body %}
+
+<div data-role="page">
+	<div data-role="header" data-theme="b">
+		<h1>Patients</h1>
+		<a href="{{ path('app_index') }}" data-icon="home" data-iconpos="notext" data-transition="flip"  class="ui-btn-left">retour accueil</a>
+		<a href="{{ path('patient_new') }}" data-icon="plus" data-iconpos="right" data-transition="flip"  class="ui-btn-right">Ajouter</a>
+	</div><!-- /header -->
+	<div data-role="content">	
+        <ul data-role="listview" data-autodividers="true" data-filter="true" data-inset="true">
+            <table  class="table table-condensed table-hover compact dataTable no-footer" 
+                    id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+            <thead>
+                <tr role="row">
+                    <th class="sorting ui-state-default sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" 
+                        rowspan="1" colspan="1" aria-sort="ascending" 
+                        aria-label="Patient: activer pour trier la colonne par ordre d&amp;eacute;croissant" style="width: 338px;">
+                        <div class="DataTables_sort_wrapper">Patient
+                            <span class="DataTables_sort_icon css_right ui-icon ui-icon-triangle-1-n"></span>
+                        </div>
+                    </th>
+                    <th class="sorting ui-state-default" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" 
+                        aria-label="Tel/Mob: activer pour trier la colonne par ordre croissant" style="width: 169px;">
+                        <div class="DataTables_sort_wrapper">Tel/Mob
+                            <span class="DataTables_sort_icon css_right ui-icon ui-icon-caret-2-n-s"></span>
+                        </div>
+                    </th>
+                    <th class="sorting ui-state-default" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" 
+                        aria-label="Nombre de visites: activer pour trier la colonne par ordre croissant" style="width: 263px;">
+                        <div class="DataTables_sort_wrapper">Nombre de visites
+                            <span class="DataTables_sort_icon css_right ui-icon ui-icon-caret-2-n-s"></span>
+                        </div>
+                    </th>
+                    <th class="sorting ui-state-default" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" 
+                        aria-label="Dernière consultation: activer pour trier la colonne par ordre croissant" style="width: 372px;">
+                            <div class="DataTables_sort_wrapper">Dernière consultation
+                                <span class="DataTables_sort_icon css_right ui-icon ui-icon-caret-2-n-s"></span>
+                            </div>
+                    </th>
+                    <th class="sorting ui-state-default" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" 
+                        aria-label=": activer pour trier la colonne par ordre croissant" style="width: 97px;">
+                        <div class="DataTables_sort_wrapper">
+                            <a  href="../ressources/class/vcard/script_vcard_all.php" class="m-btn rnd green icn-only" target="_self" 
+                                data-placement="left" title="" 
+                                data-original-title="Exporter les coordonnées de TOUT vos patients en vCard vers votre Carnet d'adresse ou votre SmartPhone">
+                                <i class="icon-share"></i>
+                            </a>      
+                            <span class="DataTables_sort_icon css_right ui-icon ui-icon-caret-2-n-s"></span>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+        {% for patient in patients %}
+            <tr>
+                {# <td>{{ patient.id }}</td> #}
+                <td>{{ patient.Nom }} {{ patient.prenom }}</td>
+                <td>{{ patient.telephone.telephone }} / {{ patient.telephone.mobile }}</td>
+                {# <td>{{ patient.sexe }}</td> #}
+                <td>
+                    <a href="{{ path('consultations_show', {'id': patient.id}) }}" style="border:0" title="" data-original-title="Afficher directement une nouvelle consultation">
+			            <div class="badge badge-info">{{ patient.consultations | length }}</div>
+                    </a>
+                     visite{% if patient.consultations | length > 1 %}s{% endif %}
+                </td>
+                {% set lastConsult = patient.consultations|last %}
+                <td>{% if lastConsult %}{{ lastConsult.date }}{% endif %}</td>
+                <td>{{ patient.dateNaissance ? patient.dateNaissance|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a  href="../ressources/class/vcard/script_vcard.php?vcard=49" class="m-btn rnd icn-only" target="_self" 
+                        data-placement="left" title="" 
+                        data-original-title="Exporter les coordonnées de {{ patient.prenom }} {{ patient.Nom }} en vCard vers votre Carnet d'adresse ou votre SmartPhone">
+                        <i class="icon-share"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('patient_show', {'id': patient.id}) }}">show</a>
+                    <a href="{{ path('patient_edit', {'id': patient.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('patient_new') }}">Create new</a>
+{% endblock %}

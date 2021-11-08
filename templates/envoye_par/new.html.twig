@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New EnvoyePar{% endblock %}
+
+{% block body %}
+    <h1>Create new EnvoyePar</h1>
+
+    {{ include('envoye_par/_form.html.twig') }}
+
+    <a href="{{ path('envoye_par_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pediatrie index{% endblock %}
+
+{% block body %}
+    <h1>Pediatrie index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Taille</th>
+                <th>Poids</th>
+                <th>Pc</th>
+                <th>Apgar1</th>
+                <th>Apgar5</th>
+                <th>Apgar10</th>
+                <th>Allaitement</th>
+                <th>TempsAllaitement</th>
+                <th>Remarques</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pediatrie in pediatries %}
+            <tr>
+                <td>{{ pediatrie.id }}</td>
+                <td>{{ pediatrie.taille }}</td>
+                <td>{{ pediatrie.poids }}</td>
+                <td>{{ pediatrie.pc }}</td>
+                <td>{{ pediatrie.apgar1 }}</td>
+                <td>{{ pediatrie.apgar5 }}</td>
+                <td>{{ pediatrie.apgar10 }}</td>
+                <td>{{ pediatrie.allaitement ? 'Yes' : 'No' }}</td>
+                <td>{{ pediatrie.tempsAllaitement }}</td>
+                <td>{{ pediatrie.remarques }}</td>
+                <td>
+                    <a href="{{ path('pediatrie_show', {'id': pediatrie.id}) }}">show</a>
+                    <a href="{{ path('pediatrie_edit', {'id': pediatrie.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('pediatrie_new') }}">Create new</a>
+{% endblock %}

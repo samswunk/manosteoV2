@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accouchement index{% endblock %}
+
+{% block body %}
+    <h1>Accouchement index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Difficultes</th>
+                <th>Conditions</th>
+                <th>Peridurale</th>
+                <th>Episiotomie</th>
+                <th>Instrumentalisation</th>
+                <th>Presentation</th>
+                <th>Remarques</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for accouchement in accouchements %}
+            <tr>
+                <td>{{ accouchement.id }}</td>
+                <td>{{ accouchement.difficultes ? 'Yes' : 'No' }}</td>
+                <td>{{ accouchement.conditions ? 'Yes' : 'No' }}</td>
+                <td>{{ accouchement.peridurale ? 'Yes' : 'No' }}</td>
+                <td>{{ accouchement.episiotomie ? 'Yes' : 'No' }}</td>
+                <td>{{ accouchement.instrumentalisation ? 'Yes' : 'No' }}</td>
+                <td>{{ accouchement.presentation ? 'Yes' : 'No' }}</td>
+                <td>{{ accouchement.remarques }}</td>
+                <td>
+                    <a href="{{ path('accouchement_show', {'id': accouchement.id}) }}">show</a>
+                    <a href="{{ path('accouchement_edit', {'id': accouchement.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('accouchement_new') }}">Create new</a>
+{% endblock %}

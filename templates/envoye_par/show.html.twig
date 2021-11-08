@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EnvoyePar{% endblock %}
+
+{% block body %}
+    <h1>EnvoyePar</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ envoye_par.id }}</td>
+            </tr>
+            <tr>
+                <th>Libelle</th>
+                <td>{{ envoye_par.libelle }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('envoye_par_index') }}">back to list</a>
+
+    <a href="{{ path('envoye_par_edit', {'id': envoye_par.id}) }}">edit</a>
+
+    {{ include('envoye_par/_delete_form.html.twig') }}
+{% endblock %}

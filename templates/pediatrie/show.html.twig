@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pediatrie{% endblock %}
+
+{% block body %}
+    <h1>Pediatrie</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ pediatrie.id }}</td>
+            </tr>
+            <tr>
+                <th>Taille</th>
+                <td>{{ pediatrie.taille }}</td>
+            </tr>
+            <tr>
+                <th>Poids</th>
+                <td>{{ pediatrie.poids }}</td>
+            </tr>
+            <tr>
+                <th>Pc</th>
+                <td>{{ pediatrie.pc }}</td>
+            </tr>
+            <tr>
+                <th>Apgar1</th>
+                <td>{{ pediatrie.apgar1 }}</td>
+            </tr>
+            <tr>
+                <th>Apgar5</th>
+                <td>{{ pediatrie.apgar5 }}</td>
+            </tr>
+            <tr>
+                <th>Apgar10</th>
+                <td>{{ pediatrie.apgar10 }}</td>
+            </tr>
+            <tr>
+                <th>Allaitement</th>
+                <td>{{ pediatrie.allaitement ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>TempsAllaitement</th>
+                <td>{{ pediatrie.tempsAllaitement }}</td>
+            </tr>
+            <tr>
+                <th>Remarques</th>
+                <td>{{ pediatrie.remarques }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('pediatrie_index') }}">back to list</a>
+
+    <a href="{{ path('pediatrie_edit', {'id': pediatrie.id}) }}">edit</a>
+
+    {{ include('pediatrie/_delete_form.html.twig') }}
+{% endblock %}

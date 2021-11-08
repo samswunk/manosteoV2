@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit EnvoyePar{% endblock %}
+
+{% block body %}
+    <h1>Edit EnvoyePar</h1>
+
+    {{ include('envoye_par/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('envoye_par_index') }}">back to list</a>
+
+    {{ include('envoye_par/_delete_form.html.twig') }}
+{% endblock %}

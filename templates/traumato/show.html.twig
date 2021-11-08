@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Traumato{% endblock %}
+
+{% block body %}
+    <h1>Traumato</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ traumato.id }}</td>
+            </tr>
+            <tr>
+                <th>Fractures</th>
+                <td>{{ traumato.fractures }}</td>
+            </tr>
+            <tr>
+                <th>Entorses</th>
+                <td>{{ traumato.entorses }}</td>
+            </tr>
+            <tr>
+                <th>Accidents</th>
+                <td>{{ traumato.accidents }}</td>
+            </tr>
+            <tr>
+                <th>Operations</th>
+                <td>{{ traumato.operations }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('traumato_index') }}">back to list</a>
+
+    <a href="{{ path('traumato_edit', {'id': traumato.id}) }}">edit</a>
+
+    {{ include('traumato/_delete_form.html.twig') }}
+{% endblock %}

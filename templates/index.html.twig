@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}<h1 class="color-chauffatec"></h1>{% endblock %}
+
+{% block size %}6{% endblock size %}
+
+{% block body %}
+        <div class="row col-md-12">
+            <div class="msr image_accueil col-lg-8 col-md-12 pr-5 pl-5">
+                <img src="{{ asset('/img/Logo.png') }}" style="width:100%; min-width:500px; max-width:500px; ">
+            </div>
+            <div class="msr div_accueil card col-lg-4 col-md-12 float-right pl-4 pr-2 pt-4" 
+                 style=" background-color: #EE4423; 
+                        line-height: 1.5; 
+                        color: #fff;
+                        display: -webkit-box;
+                        font-size: 1.5rem;
+                        font-weight: 300;
+                        height:80%; ">
+                    <p><strong><span><b>LA BOITE À CUISINE</b></span></strong></p>
+                    <p class="small"><small>285 Avenue de Strasbourg, bat. D.&nbsp;54000 NANCY</small></p>
+                    <p><a   class="phone h3"
+                            style=" color: inherit;
+                                    text-decoration: none;
+                                    -webkit-transition: all ease-in .1s;
+                                    -o-transition: all ease-in .1s;
+                                    transition: all ease-in .1s;" 
+                            href="tel:+33683204058">06 72 53 25 02</a></p>
+                    <p class="small"><small><b>laboiteacuisine@gmail.org</b></small></p>
+            </div>
+        </div>
+        <div class="msr div_hello col mt-2 text-center row">
+                <div class="col-4">
+                        <a href="https://www.helloasso.com/">
+                        <img style="width:300px;" src="{{ asset('/img/Helloasso-logo.png')}}">
+                        </a>    
+                </div>
+                <div class="col-4">
+                        <a href="https://www.helloasso.com/">
+                        <img style="width:300px;" src="{{ asset('/img/Helloasso-logo.png')}}">
+                        </a>    
+                </div>  
+        </div>        
+{% endblock %}

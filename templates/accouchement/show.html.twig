@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accouchement{% endblock %}
+
+{% block body %}
+    <h1>Accouchement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ accouchement.id }}</td>
+            </tr>
+            <tr>
+                <th>Difficultes</th>
+                <td>{{ accouchement.difficultes ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Conditions</th>
+                <td>{{ accouchement.conditions ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Peridurale</th>
+                <td>{{ accouchement.peridurale ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Episiotomie</th>
+                <td>{{ accouchement.episiotomie ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Instrumentalisation</th>
+                <td>{{ accouchement.instrumentalisation ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Presentation</th>
+                <td>{{ accouchement.presentation ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Remarques</th>
+                <td>{{ accouchement.remarques }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('accouchement_index') }}">back to list</a>
+
+    <a href="{{ path('accouchement_edit', {'id': accouchement.id}) }}">edit</a>
+
+    {{ include('accouchement/_delete_form.html.twig') }}
+{% endblock %}

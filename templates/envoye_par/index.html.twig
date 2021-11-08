@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EnvoyePar index{% endblock %}
+
+{% block body %}
+    <h1>EnvoyePar index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for envoye_par in envoye_pars %}
+            <tr>
+                <td>{{ envoye_par.id }}</td>
+                <td>{{ envoye_par.libelle }}</td>
+                <td>
+                    <a href="{{ path('envoye_par_show', {'id': envoye_par.id}) }}">show</a>
+                    <a href="{{ path('envoye_par_edit', {'id': envoye_par.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('envoye_par_new') }}">Create new</a>
+{% endblock %}

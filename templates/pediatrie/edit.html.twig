@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Pediatrie{% endblock %}
+
+{% block body %}
+    <h1>Edit Pediatrie</h1>
+
+    {{ include('pediatrie/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('pediatrie_index') }}">back to list</a>
+
+    {{ include('pediatrie/_delete_form.html.twig') }}
+{% endblock %}

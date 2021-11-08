@@ -1,0 +1,260 @@
+{{ form_start(form) }}
+    <div class="accordion col-6 m-0" id="accordion">
+        <div class="card">
+            <div class="card-header" id="divCivilite" data-toggle="collapse" data-target="#Civilite" aria-expanded="true" aria-controls="Civilite">
+                <h5 class="mb-0 text-center text-bold text-dark">
+                    Civilité
+                </h5>
+            </div>
+            <div id="Civilite" class="collapse show" aria-labelledby="divCivilite" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="row col m-2">
+                        <label for="patient_envoyePar" class="col-2 m-1">Envoyé par : </label>
+                        {{ form_widget(form.envoyePar         ,{'attr':{'class':'form-control col-4 m-1'}}) }}
+                    </div>
+                    <div class="row col m-1">
+                        {{ form_widget(form.Nom             ,{'attr':{'class':'form-control col-3 m-1'}}) }}
+                        {{ form_widget(form.prenom          ,{'attr':{'class':'form-control col-3 m-1'}}) }}
+                        {{ form_widget(form.sexe            ,{'attr':{'class':'form-control col-2 m-1'}}) }}
+                        {#<div class="input-group col-3 mt-1">
+                                <span class="ml-1" style="position:absolute; height: 2.3em; display: flex;  align-items: center;">
+                                <i class="fa fa-birthday-cake"></i>
+                            </span> #}
+                        {{ form_widget(form.dateNaissance   ,{'attr':{'class':'form-control col-3 m-1 datepicker',
+                                                                        'placeholder':'Date de naissance'}}) }}
+                        {#</div>
+                            <label for="patient_dateNaissance" class="col-1 m-2 mr-0 fa fa-birthday-cake"></label> #}
+                    </div>
+                    <div class="row col m-1">
+                        {{ form_widget(form.Profession      ,{'attr':{'class':'form-control col-4 m-1'}}) }}
+                        {{ form_widget(form.Secu            ,{'attr':{'class':'form-control col-4 m-1'}}) }}
+                        {{ form_widget(form.situation       ,{'attr':{'class':'form-control col-4 m-1'}}) }}
+                        {{ form_widget(form.nbEnfant        ,{'attr':{'class':'form-control col-4 m-1'}}) }}
+                    </div>                 
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="divAdresse" data-toggle="collapse" data-target="#Adresse" aria-expanded="true" aria-controls="Adresse">
+                <h5 class="mb-0 text-center text-bold text-dark">
+                    Coordonnées
+                </h5>
+            </div> 
+            <div id="Adresse" class="collapse show" aria-labelledby="divAdresse" data-parent="#accordion">
+                <div class="card-body row">
+                    {{ form_widget(form.adresse.adresse1    ,{'attr':{'class':'form-control col-5 m-1',
+                                                                        'placeholder':'Adresse'}}) }}
+                    {{ form_widget(form.adresse.adresse2    ,{'attr':{'class':'form-control col-5 m-1',
+                                                                        'placeholder':"Complément d'adresse"}}) }}
+                    {{ form_widget(form.adresse.codePostal  ,{'attr':{'class':'form-control col-5 m-1',
+                                                                        'placeholder':'Code postal'}}) }}
+                    {{ form_widget(form.adresse.ville       ,{'attr':{'class':'form-control col-5 m-1',
+                                                                        'placeholder':'Ville'}}) }}
+                    {{ form_widget(form.telephone.telephone    ,{'attr':{   'class'         :'border form-control m-1',
+                                                                            'placeholder'   :'Téléphone', 
+                                                                            'style'         :'width:15.3em;'}}) }}
+                    {{ form_widget(form.telephone.mobile       ,{'attr':{   'class'         :'border form-control m-1',
+                                                                            'placeholder'   :'Mobile', 
+                                                                            'style'         :'width:15.3em;'}}) }}
+                    {{ form_widget(form.telephone.mail         ,{'attr':{   'class'         :'border form-control m-1',
+                                                                            'placeholder'   :'Mail', 
+                                                                            'style'         :'width:15.3em;'}}) }}
+                    <div style="display:none;">
+                        {{ form_widget(form.adresse.latitude) }}
+                        {{ form_widget(form.adresse.longitude) }}
+                    </div>
+                </div>
+            </div>   
+        </div>   
+    </div>            
+    {{ form_rest(form) }}
+    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+<div class="col-6 m-0 form-group">
+    {% if consultations %}
+        
+    {% endif %}
+    <pre>
+        {{ dump(consultation) }}
+    </pre>
+</div>
+
+{# <form name="adresse" method="post" action="patient_record.php?id=">
+<!-- DEBUT CADRE GAUCHE-->  
+<div class="span5">
+<div id="alert_placeholder"></div>
+<div class="accordion" id="accordion3">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion3" href="#Adresse" data-original-title="" title="">
+		<button class="m-btn rnd btn-block">Adresse</button>
+      </a>
+    </div>
+    <div class="accordion-heading">
+      <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapseOne" data-original-title="" title="">
+		<button class="m-btn rnd btn-block">Civilités</button>
+      </a>
+    </div>
+    <div id="collapseOne" class="accordion-body collapse" style="height: 0px;">
+      <div class="accordion-inner has-pretty-child">
+       
+      </div>
+    </div>
+    <div id="collapseOne" class="accordion-body collapse" style="height: 0px;">
+      <div class="accordion-inner has-pretty-child">
+
+						<select name="zl_envoyepar" id="zl_envoyepar">
+								  			<option value="1">Autre</option>
+	  								  			<option value="2">Bouche à oreille</option>
+	  								  			<option value="3">Commerces</option>
+	  								  			<option value="10">Confrère</option>
+	  								  			<option value="4">Médecin Traitant</option>
+	  								  			<option value="5">Moteur de recherche</option>
+	  								  			<option value="6">Pages Jaunes</option>
+	  								  			<option value="7">Plaque murale</option>
+	  								  			<option value="8">Plaquette</option>
+	  								  			<option value="9">Site Personnel</option>
+	  												 	 </select>				
+
+<br>
+  <div class="clearfix prettyradio labelright  red "><input class="myClass" data-label="Homme" type="radio" name="radioSexe" id="radioSexeM" value="1" checked="" style="display: none;"><a href="#" class="checked"></a>
+<label for="radioSexeM">Homme</label></div>
+<br>
+  <div class="clearfix prettyradio labelright  red "><input class="myClass" data-label="Femme" type="radio" name="radioSexe" id="radioSexeF" value="2" style="display: none;"><a href="#" class=""></a>
+<label for="radioSexeF">Femme</label></div>
+<br>
+	<input id="Nom" placeholder="Nom" class="input-xlarge" type="text" name="Nom" maxlength="255" value="" onkeyup="javascript:this.value=this.value.toUpperCase();">
+	<input placeholder="Prénom" class="input-xlarge" type="text" name="Prenom" maxlength="255" value="">
+<br>
+	<input type="text" class="datepicker" name="date_naissance2" style="margin-right: 2px;" value="//">
+	<div style="display: none;">
+		<select class="input-small" name="date_naissance_j" style="margin-right: 2px;">
+			<option value="" selected="">Jour</option>
+			<option value="01">01</option>
+			<option value="02">02</option>
+			<option value="03">03</option>
+			<option value="04">04</option>
+			<option value="05">05</option>
+			<option value="06">06</option>
+			<option value="07">07</option>
+			<option value="08">08</option>
+			<option value="09">09</option>
+			<option value="10">10</option>
+			<option value="11">11</option>
+			<option value="12">12</option>
+			<option value="13">13</option>
+			<option value="14">14</option>
+			<option value="15">15</option>
+			<option value="16">16</option>
+			<option value="17">17</option>
+			<option value="18">18</option>
+			<option value="19">19</option>
+			<option value="20">20</option>
+			<option value="21">21</option>
+			<option value="22">22</option>
+			<option value="23">23</option>
+			<option value="24">24</option>
+			<option value="25">25</option>
+			<option value="26">26</option>
+			<option value="27">27</option>
+			<option value="28">28</option>
+			<option value="29">29</option>
+			<option value="30">30</option>
+			<option value="31">31</option>
+		</select>
+		<select class="input-small" name="date_naissance_m" style="margin-left: 2px;margin-right: 2px;">
+			<option value="" selected="">Mois</option>
+			<option value="01">Janvier</option>
+			<option value="02">Février</option>
+			<option value="03">Mars</option>
+			<option value="04">Avril</option>
+			<option value="05">Mai</option>
+			<option value="06">Juin</option>
+			<option value="07">Juillet</option>
+			<option value="08">Août</option>
+			<option value="09">Septembre</option>
+			<option value="10">Octobre</option>
+			<option value="11">Novembre</option>
+			<option value="12">Décembre</option>
+		</select>
+		<input placeholder="Année" class="input-small" name="date_naissance_a" style="margin-left: 2px;margin-right: 2px;" type="text" maxlength="4" size="4" value="">
+		<br> --&gt;
+	</div>
+	<small></small>
+	<br>
+	<input placeholder="Profession" class="input-xlarge" type="text" name="Prof" size="30" maxlength="255" value="">
+
+	<input placeholder="N° Sécu" class="input-xlarge" type="text" name="Secu" size="30" maxlength="255" value="">
+
+	<select class="input-medium" name="situation" style="margin-left: 2px;margin-right: 2px;">
+		<option value="" selected="">Situation familiale</option>
+		<option value="Célibataire">Célibataire</option>
+		<option value="En couple">En couple</option>
+		<option value="Pacsé(e)">Pacsé(e)</option>
+		<option value="Marié(e)">Marié(e)</option>
+		<option value="Divorcé(e)">Divorcé(e)</option>
+		<option value="Veuf(ve)">Veuf(ve)</option>
+	</select>
+	<select class="input-medium" name="nb_enfant" style="margin-left: 2px;margin-right: 2px;">
+		<option value="" selected="">Nombre d'enfants</option>
+		<option value="1 enfant">1 enfant</option>
+		<option value="2 enfants">2 enfants</option>
+		<option value="3 enfants">3 enfants</option>
+		<option value="4 enfants">4 enfants</option>
+		<option value="5 enfants">5 enfants</option>
+		<option value="6 enfants">6 enfants</option>
+		<option value="7 enfants">7 enfants</option>
+		<option value="8 enfants">8 enfants</option>
+		<option value="9 enfants">9 enfants</option>
+		<option value="10 enfants">10 enfants</option>
+	</select>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseTwo" data-original-title="" title="">
+		<button class="m-btn rnd btn-block">Coordonnées</button>
+      </a>
+    </div>
+    <div id="collapseTwo" class="accordion-body collapse" style="height: 0px;">
+      <div class="accordion-inner">
+
+	<input placeholder="Adresse" class="input-xlarge" type="text" name="Adresse1" maxlength="255" value="">
+
+	<input placeholder="Complément d'adresse" class="input-xlarge" type="text" name="Adresse2" maxlength="255" value="">
+
+	<input placeholder="Code Postal" class="input-xlarge" type="text" name="CP" maxlength="255" value="" id="inputString" onkeyup="lookup(this.value);" onblur="fill();">
+
+	<input placeholder="Ville" class="input-xlarge" type="text" name="Ville" maxlength="255" value="" id="outputString" onkeyup="javascript:this.value=this.value.toUpperCase();">					
+
+	<input placeholder="Téléphone" class="input-xlarge" type="text" name="Tel" maxlength="14" value="" onkeypress="return verifTel(event);" onkeyup="return addSepNumTel(event, this);">
+
+	<input placeholder="Mobile" class="input-xlarge" type="text" name="Mob" maxlength="14" value="" onkeypress="return verifTel(event);" onkeyup="return addSepNumTel(event, this);">
+
+	<input placeholder="Mail" class="input-xlarge" type="text" name="Mail" maxlength="255" value="">
+	<br>
+
+<a href="../map/maj_coord_mono.php?idad=&amp;idP=" class="m-btn green rnd icn-only" data-placement="right" title="" data-original-title="Ajouter le patient à la carte"><i class="icon-map-marker"></i></a>     </div>
+    </div>
+  </div>
+</div>
+<input type="button" class="m-btn blue rnd btn-block" name="valider" value="Valider" onclick="verif()"><div class="container"></div>
+
+<!-- DIV ALERT -->
+<br><br>
+<div class="alert" id="alertdiv" style="display: none;">
+<a class="close" data-dismiss="alert" href="#" data-original-title="" title="">×</a>
+<h4>Attention !</h4>
+<p>Les éléments suivants sont obligatoires :</p>
+<p>
+</p><li><b>Nom</b></li>
+<p></p>
+</div>
+<script>
+setTimeout(function() { // this will automatically close the alert and remove this if the users doesnt close it in 5 secs
+$("#alertdiv").fadeOut(1000);
+}, 5000);
+</script>
+<!-- FIN DIV ALERT -->
+</div></form> #}

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Traumato index{% endblock %}
+
+{% block body %}
+    <h1>Traumato index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fractures</th>
+                <th>Entorses</th>
+                <th>Accidents</th>
+                <th>Operations</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for traumato in traumatos %}
+            <tr>
+                <td>{{ traumato.id }}</td>
+                <td>{{ traumato.fractures }}</td>
+                <td>{{ traumato.entorses }}</td>
+                <td>{{ traumato.accidents }}</td>
+                <td>{{ traumato.operations }}</td>
+                <td>
+                    <a href="{{ path('traumato_show', {'id': traumato.id}) }}">show</a>
+                    <a href="{{ path('traumato_edit', {'id': traumato.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('traumato_new') }}">Create new</a>
+{% endblock %}

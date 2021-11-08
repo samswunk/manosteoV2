@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Accouchement{% endblock %}
+
+{% block body %}
+    <h1>Create new Accouchement</h1>
+
+    {{ include('accouchement/_form.html.twig') }}
+
+    <a href="{{ path('accouchement_index') }}">back to list</a>
+{% endblock %}
