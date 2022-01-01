@@ -18,7 +18,7 @@ class Consultation
     private $id;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $date;
 
@@ -56,6 +56,21 @@ class Consultation
      * @ORM\OneToOne(targetEntity=Facture::class, cascade={"persist", "remove"})
      */
     private $facture;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $IsConfirmed;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $IsFree;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $Titre;
 
     public function getId(): ?int
     {
@@ -154,6 +169,42 @@ class Consultation
     public function setFacture(?Facture $facture): self
     {
         $this->facture = $facture;
+
+        return $this;
+    }
+
+    public function getIsConfirmed(): ?bool
+    {
+        return $this->IsConfirmed;
+    }
+
+    public function setIsConfirmed(?bool $IsConfirmed): self
+    {
+        $this->IsConfirmed = $IsConfirmed;
+
+        return $this;
+    }
+
+    public function getIsFree(): ?bool
+    {
+        return $this->IsFree;
+    }
+
+    public function setIsFree(?bool $IsFree): self
+    {
+        $this->IsFree = $IsFree;
+
+        return $this;
+    }
+
+    public function getTitre(): ?string
+    {
+        return $this->Titre;
+    }
+
+    public function setTitre(?string $Titre): self
+    {
+        $this->Titre = $Titre;
 
         return $this;
     }

@@ -1,0 +1,79 @@
+<div class="sidebar-inner slimscrollleft m-0 p-0">
+    <!--- Divider -->
+    <div id="sidebar-menu" class="m-0 p-0">
+        <ul>
+            {# <li class="text-muted menu-title">Navigation</li> #}
+            <li class="rounded">
+                <a href="{{ path('app_index') }}" class="waves-effect"><i class="ti-home"></i> 
+                    <span> Dashboard </span></a>
+                {# <ul class="list-unstyled">
+                    <li><a href="index.html">Dashboard 1</a></li>
+                    <li><a href="dashboard_2.html">Dashboard 2</a></li>
+                    <li><a href="dashboard_3.html">Dashboard 3</a></li>
+                    <li><a href="dashboard_4.html">Dashboard 4</a></li>
+                </ul> #}
+            </li>
+            <li class="bg-gradient-primary rounded">
+                <a href="{{ path('patient_new') }}" class="waves-effect text-white">
+                    <i class="fa fa-user-plus"></i><span> Nouveau patient </span>
+                </a>
+            </li>
+            <li class="bg-gradient-info rounded">
+                <a href="{{ path('booking_new') }}" class="waves-effect text-white">
+                    <i class=" fa fa-calendar-plus-o"></i><span> Rendez vous </span>
+                </a>
+            </li>
+            <li class="">
+                <a href="{{ path('patient_index') }}" class="waves-effect">
+                    <i class="fas fa-users"></i><span> Listing patients </span>
+                </a>
+            </li>
+            <li class="">
+                <a href="{{ path('booking_index') }}" class="waves-effect">
+                    <i class="fa fa-calendar"></i><span class="label label-primary pull-right">10</span><span> Planning </span></a>
+            </li>
+            <li class="">
+                <a href="javascript:void(0);" class="waves-effect">
+                    <i class="fa fa-calculator"></i> <span> Comptabilité </span></a>
+            </li>
+            <li class="has_sub">
+                <a href="javascript:void(0);" class="waves-effect">
+                    <i class="fa fa-pie-chart"></i><span> Statistiques </span>
+                </a>
+                <ul class="list-unstyled">
+                    <li><a href="chart-flot.html">Chiffre d'affaire</a></li>
+                    <li><a href="chart-morris.html"><i class="fas fa-users"></i><span> Patients </span></a></a></li>
+                    <li><a href="chart-chartjs.html">Consultation</a></li>
+                    <li><a href="chart-peity.html"><i class="fa fa-calculator"></i> <span> Paiements </span></a></li>
+                </ul>
+            </li>
+
+            <li class="has_sub">
+                <a href="javascript:void(0);" class="waves-effect"><i class="ti-location-pin"></i><span> Maps </span> <span class="menu-arrow"></span></a>
+                <ul class="list-unstyled">
+                    <li><a href="map-google.html"> Google Map</a></li>
+                    <li><a href="map-vector.html"> Vector Map</a></li>
+                </ul>
+            </li>
+
+            <li class="has_sub">
+                <a href="javascript:void(0);" class="waves-effect"><i class="ti-files"></i><span> Configuration </span> <span class="menu-arrow"></span></a>
+                <ul class="list-unstyled">
+                    <li><a href="#">Coordonnées</a></li>
+                    <li><a href="#">Identification</a></li>
+                    <li><a href="#">Personnalisation</a></li>
+                    <li><a href="#">Administration</a></li>
+                </ul>
+            </li>
+            <li class="has_sub">
+                <a href="javascript:void(0);" class="waves-effect"><i class="ti-email"></i><span> Email </span> <span class="menu-arrow"></span></a>
+                <ul class="list-unstyled">
+                    <li><a href="email-inbox.html"> Boite de réception</a></li>
+                    <li><a href="email-compose.html"> Ecrire un Mail</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+</div>

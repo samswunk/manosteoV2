@@ -1,11 +1,89 @@
-{% extends 'base.html.twig' %}
+{% extends 'index2/base2.html.twig' %}
 
 {% block title %}New Patient{% endblock %}
 
 {% block body %}
     <h1>Create new Patient</h1>
-
-    {{ include('patient/_form.html.twig') }}
-
+    {{ form_start(form,{'attr':{'class':'col-12 m-0 p-0 row'}}) }}
+        <input type="hidden" id="patient__token" name="patient[_token]" value="{{ csrf_token('insert') }}">
+        <div class="accordion m-0 p-0 col-12" id="accordionCivilite">
+            {################################################################}
+            {########################## CIVILITÉ  ###########################}
+            {################################################################}            
+            <div class="card" id="cardCivilite">
+                <div class="card-header active" id="divCivilite" data-toggle="collapse" data-target="#Civilite" aria-expanded="true" aria-controls="Civilite">
+                    <h5 class="mb-0 text-center text-bold text-dark">
+                        Civilité
+                    </h5>
+                </div>
+                <div id="Civilite" class="collapse active show" aria-labelledby="divCivilite" data-parent="#accordionCivilite">
+                    <div class="card-body">
+                        <div class="row m-0 p-0 small">
+                            <label for="patient_envoyePar" class="col-2 m-0 p-0">Envoyé par : </label>
+                            {{ form_widget(form.envoyePar         ,{'attr':{'class':'col-4 m-0 p-0 rounded small'}}) }}
+                        </div>
+                        <div class="row col m-1">
+                            {{ form_widget(form.Nom             ,{'attr':{'class':'form-control col-3 m-1'}}) }}
+                            {{ form_widget(form.prenom          ,{'attr':{'class':'form-control col-3 m-1'}}) }}
+                            {{ form_widget(form.sexe            ,{'attr':{'class':'form-control col-2 m-1'}}) }}
+                            {#<div class="input-group col-3 mt-1">
+                                    <span class="ml-1" style="position:absolute; height: 2.3em; display: flex;  align-items: center;">
+                                    <i class="fa fa-birthday-cake"></i>
+                                </span> #}
+                            {{ form_widget(form.dateNaissance   ,{'attr':{'class':'form-control col-3 p-0 pl-2 m-1 datepicker',
+                                                                            'placeholder':'Date de naissance'}}) }}
+                            {#</div>
+                                <label for="patient_dateNaissance" class="col-1 m-2 mr-0 fa fa-birthday-cake"></label> #}
+                        </div>
+                        <div class="row col m-1">
+                            {{ form_widget(form.Profession      ,{'attr':{'class':'form-control col-4 m-1'}}) }}
+                            {{ form_widget(form.Secu            ,{'attr':{'class':'form-control col-4 m-1'}}) }}
+                            {{ form_widget(form.situation       ,{'attr':{'class':'form-control col-4 m-1'}}) }}
+                            {{ form_widget(form.nbEnfant        ,{'attr':{'class':'form-control col-4 m-1'}}) }}
+                        </div>                 
+                    </div>
+                </div>
+            </div>
+            {################################################################}
+            {######################### COORDONNEES  #########################}
+            {################################################################}            
+            <div class="card" id="cardCoordonnees">
+                <div class="card-header" id="divAdresse" data-toggle="collapse" data-target="#Adresse" aria-expanded="true" aria-controls="Adresse">
+                    <h5 class="mb-0 text-center text-bold text-dark">
+                        Coordonnées
+                    </h5>
+                </div> 
+                <div id="Adresse" class="collapse" aria-labelledby="divAdresse" data-parent="#accordionCivilite">
+                    <div class="card-body row">
+                        {{ form_widget(form.adresse.adresse1    ,{'attr':{  'class':'form-control col-5 m-1',
+                                                                            'placeholder':'Adresse'}}) }}
+                        {{ form_widget(form.adresse.adresse2    ,{'attr':{  'class':'form-control col-5 m-1',
+                                                                            'placeholder':"Complément d'adresse"}}) }}
+                        {{ form_widget(form.adresse.codePostal  ,{'attr':{  'class':'form-control col-5 m-1',
+                                                                            'placeholder':'Code postal'}}) }}
+                        {{ form_widget(form.adresse.ville       ,{'attr':{  'class':'form-control col-5 m-1',
+                                                                            'placeholder':'Ville'}}) }}
+                        {{ form_widget(form.telephone.telephone ,{'attr':{  'class'         :'form-control m-1',
+                                                                            'placeholder'   :'Téléphone', 
+                                                                            'style'         :'width:13em;'}}) }}
+                        {{ form_widget(form.telephone.mobile    ,{'attr':{  'class'         :'form-control m-1',
+                                                                            'placeholder'   :'Mobile', 
+                                                                            'style'         :'width:13em;'}}) }}
+                        {{ form_widget(form.telephone.mail      ,{'attr':{  'class'         :'form-control m-1',
+                                                                            'placeholder'   :'Mail', 
+                                                                            'style'         :'width:13em;'}}) }}
+                        <div style="display:none;">
+                            {# {{ form_widget(form.adresse.latitude) }}
+                            {{ form_widget(form.adresse.longitude) }} #}
+                        </div>
+                    </div>
+                </div>   
+            </div>   
+        </div>  
+        <div class="row col-12">
+            <button class="btn btn-primary m-0 mt-2 col">Enregistrer</button>
+            <button class="btn btn-primary m-0 mt-2 col">Mettre à jour</button>
+        </div>     
+    {{ form_end(form, {'render_rest': false}) }}   
     <a href="{{ path('patient_index') }}">back to list</a>
 {% endblock %}

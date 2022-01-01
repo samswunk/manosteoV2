@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\PatientRepository;
+use App\Services\EncryptorService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Nzo\UrlEncryptorBundle\Encryptor\Encryptor;
 
 /**
  * @ORM\Entity(repositoryClass=PatientRepository::class)
@@ -85,7 +87,7 @@ class Patient
     private $traumato;
 
     /**
-     * @ORM\OneToMany(targetEntity=Consultation::class, mappedBy="patient")
+     * @ORM\OneToMany(targetEntity=Consultation::class, mappedBy="patient", cascade={"persist", "remove"})
      */
     private $consultations;
 
@@ -104,11 +106,46 @@ class Patient
      */
     private $situation;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $antecedents;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Mutuelle;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Loisir;
+
+    /**
+     * @ORM\Column(type="string", length=1, nullable=true)
+     */
+    private $PrefManuelle;
+
     public function __construct()
     {
-        $this->consultations = new ArrayCollection();
+        $this->consultations    = new ArrayCollection();
     }
 
+    public function encrypt($valeur)
+    {
+        $secret_key='7134743677397A24432646294A404E63' ;   # Required, max length of 100 characters.
+        $secret_iv= 'manosteo20210000'                     ;               # Required only if "random_pseudo_bytes" is FALSE. Max length of 100 characters.
+        $cipher_algorithm='aes-128-ctr'  ;
+        return rtrim(strtr(base64_encode(openssl_encrypt($valeur,$cipher_algorithm,$secret_key, OPENSSL_RAW_DATA, $secret_iv)), '+/', '-_'), '=');
+    }
+    public function decrypt($valeur)
+    {
+        $secret_key='7134743677397A24432646294A404E63' ;   # Required, max length of 100 characters.
+        $secret_iv= 'manosteo20210000'                     ;               # Required only if "random_pseudo_bytes" is FALSE. Max length of 100 characters.
+        $cipher_algorithm='aes-128-ctr'  ;
+        return openssl_decrypt(base64_decode(str_pad(strtr($valeur, '-_', '+/'), strlen($valeur) % 4, '=', STR_PAD_RIGHT)),$cipher_algorithm,$secret_key, OPENSSL_RAW_DATA, $secret_iv);
+    }
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -116,25 +153,24 @@ class Patient
 
     public function getNom(): ?string
     {
-        return $this->Nom;
+        return $this->decrypt($this->Nom);
     }
 
     public function setNom(string $Nom): self
     {
-        $this->Nom = $Nom;
+        $this->Nom = $this->encrypt($Nom);
 
         return $this;
     }
 
     public function getPrenom(): ?string
     {
-        return $this->prenom;
+        return $this->decrypt($this->prenom);
     }
 
     public function setPrenom(?string $prenom): self
     {
-        $this->prenom = $prenom;
-
+        $this->prenom = $this->encrypt($prenom);
         return $this;
     }
 
@@ -337,6 +373,54 @@ class Patient
     public function setSituation(?string $situation): self
     {
         $this->situation = $situation;
+
+        return $this;
+    }
+
+    public function getAntecedents(): ?string
+    {
+        return $this->antecedents;
+    }
+
+    public function setAntecedents(?string $antecedents): self
+    {
+        $this->antecedents = $antecedents;
+
+        return $this;
+    }
+
+    public function getMutuelle(): ?string
+    {
+        return $this->Mutuelle;
+    }
+
+    public function setMutuelle(?string $Mutuelle): self
+    {
+        $this->Mutuelle = $Mutuelle;
+
+        return $this;
+    }
+
+    public function getLoisir(): ?string
+    {
+        return $this->Loisir;
+    }
+
+    public function setLoisir(?string $Loisir): self
+    {
+        $this->Loisir = $Loisir;
+
+        return $this;
+    }
+
+    public function getPrefManuelle(): ?int
+    {
+        return $this->PrefManuelle;
+    }
+
+    public function setPrefManuelle(?int $PrefManuelle): self
+    {
+        $this->PrefManuelle = $PrefManuelle;
 
         return $this;
     }

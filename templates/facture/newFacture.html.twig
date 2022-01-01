@@ -1,0 +1,51 @@
+<div id="facture" class="col m-0 p-0">
+    {# <label class="required">Facture</label> #}
+    <div id="consultation_facture"> 
+        <div>   
+            <label for="consultation_facture_tarif" class="required">Tarif</label>
+                <input  type="text" id="consultation_facture_tarif" name="consultation[facture][tarif]" required="required" class="form-control" 
+                        placeholder="Montant" value="{{ consultation.facture.tarif.vars.value ?? '' }}"/> 
+        </div> 
+        <div>   
+            <label class="required">Moyen de paiement</label>
+                {% set paiement = consultation.facture.paiement.vars.value ?? -1 %}
+                <div id="consultation_facture_paiement" class="form-control"> 
+                    <input type="radio" id="consultation_facture_paiement_0"    name="consultation[facture][paiement]"  required="required" value="1" 
+                            checked={{ paiement==1 ? "true" : ""}}/>
+                    <label for="consultation_facture_paiement_0"   class="required">   Chèque </label>
+                    <input type="radio"   id="consultation_facture_paiement_1"  name="consultation[facture][paiement]"  required="required" value="0" 
+                            checked={{ paiement==0 ? "true" : ""}}/>
+                    <label for="consultation_facture_paiement_1"   class="required">   Espèce </label>
+                    <input type="radio"   id="consultation_facture_paiement_2"  name="consultation[facture][paiement]"  required="required" value="2" 
+                            checked={{ paiement==2 ? "true" : ""}}/>
+                    <label for="consultation_facture_paiement_2"   class="required">   Carte bleue </label>   
+                </div> 
+        </div> 
+        <div>   
+            <label for="consultation_facture_numeroCheque">Numero cheque</label> 
+            <input  type="text" id="consultation_facture_numeroCheque" 
+                    name="consultation[facture][numeroCheque]" maxlength="35" value="{{ consultation.facture.numeroCheque.vars.value ?? '' }}"/> 
+        </div>
+        <div>
+            <label for="consultation_facture_regler"> Consultation réglée</label>
+            <input  type="checkbox" id="consultation_facture_regler" 
+                    name="consultation[facture][regler]" required="required" value="1" 
+                    checked="{{ consultation.facture.regler.vars.value ?? '' }}"/>
+        </div>
+        <div>
+            <label for="consultation_facture_date" class="required"> Date de la facture</label>
+            <input  type="text" id="consultation_facture_date" name="consultation[facture][date]" required="required" class="form-control datepicker" 
+                    data-provide="datepicker" format="dd/MM/yyyy" input="string" input_format="y-M-d" 
+                    value="{{ form.facture.date.vars.value ?? ('now' | date("d/m/Y")) }}" />
+        </div>
+        {# <div>
+            <label for="consultation_facture_numero" class="required"> Numero</label>
+            <input  type="text" id="consultation_facture_numero" name="consultation[facture][numero]" required="required" class="form-control" 
+                    placeholder="Numéro de la facture" />
+        </div>
+        <div>
+        <label for="consultation_facture_impression" class="required"> Impression
+        </label><input type="checkbox" id="consultation_facture_impression" name="consultation[facture][impression]" required="required" value="1" />
+        </div> #}
+    </div>
+</div>

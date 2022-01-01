@@ -1,0 +1,115 @@
+{% extends 'index2/base2.html.twig' %}
+
+{% block title %}Liste des consultations{% endblock %}
+
+{% block size %}10{% endblock size %}
+
+{% block body %}
+{% include ('patient/navbarPatient.html.twig') %}
+
+<div id="timeline" class="row rounded shadow m-0" style="background:#CCCCCC;">
+    <div class="col-md-12">
+        <section id="cd-timeline" class="cd-container">
+            <div class="cd-timeline-block m-0 p-0">
+                <div class="cd-timeline-img cd-success">
+                    <i class="fa fa-tag mt-4"></i>
+                </div> <!-- cd-timeline-img -->
+                <div class="cd-timeline-content shadow">
+                    <div class="accordion m-0 p-0 col-12" id="accordionConsult">
+                        <div class="card" id="cardConsultation">
+                            <div    class="card-header activ" id="divCardConsultation" data-toggle="collapse" data-target="#divConsultation" aria-expanded="false" 
+                                    aria-controls="divConsultation">
+                                <h5 class="mb-0 text-center text-bold text-dark">
+                                    Nouvelle Consultation
+                                </h5>
+                            </div> 
+                            <div id="divConsultation" class="collapse" aria-labelledby="divCardConsultation" data-parent="#accordionConsult">
+                                <div class="card-body">
+                                    <form name="addConsultation" method="post" class="">
+                                        {% include "consultation/newConsultation.html.twig" %}
+                                        {% include "facture/newFacture.html.twig" %}
+                                        <div class="row col-12">
+                                            <button class="btn btn-primary m-0 mt-2 col" form="addConsultation">Enregistrer</button>
+                                        </div>            
+                                    </form>
+                                </div>
+                            </div>   
+                        </div>   
+                    </div>   
+                </div> <!-- cd-timeline-content -->
+            </div> <!-- cd-timeline-block -->
+    {% for consultation in listeConsultations %}
+            <div class="cd-timeline-block m-0 p-0">
+                <div class="cd-timeline-img cd-success">
+                    <i class="fa fa-tag mt-4"></i>
+                </div> <!-- cd-timeline-img -->
+                <div class="cd-timeline-content shadow">
+                    <h3 class="text-danger"><small>MOTIF DE LA CONSULTATION</small> : {{consultation.motif}}</a></h3>
+                    <p class="">TEST : {{consultation.test}} </p>
+                    <p class="text-success">TRAITEMENT :  {{consultation.traitement}} </p>
+                    <p class="text-muted"><i class="fa fa-clock"></i>  {{consultation.date| date('d/m/Y')}}</p>
+                    <div class="row" style="height:40px;">
+                        <a  href="{{ path('consultation_show',{'id':consultation.id})}}"        class="col-12"
+                            data-toggle="tooltip" data-placement="top" title="" data-original-title="Voir le détail">
+                            <i class="fa fa-eye"></i>&nbsp;&nbsp;Détail</a>
+                        <a  href="{{ path('facture_show',{'id':consultation.facture.id })}}"    class="col-12"
+                            data-toggle="tooltip" data-placement="top" title="" data-original-title="Voir la facture">
+                            <i class="fa fa-money-check "></i>&nbsp;&nbsp;Facture</a>
+                        <div class="" style="margin-left: auto; margin-right: 0;">
+                            {% include "consultation/_delete_form.html.twig" %}
+                        </div>
+                    </div>
+                    {# <span class="cd-date"><h1><a href="#" target="_blank">{{consultation.date | date('d/m/Y')}}</a></h1></span> #}
+                </div> <!-- cd-timeline-content -->
+            </div> <!-- cd-timeline-block -->
+    {% endfor %}
+        </section> <!-- cd-timeline -->
+    </div>
+</div><!-- Row -->
+{# 
+<div id="timeline">
+    {% for consultation in listeConsultations %}
+    
+        <div class="row timeline-movement">
+            <div class="timeline-badge">
+                <span class="timeline-balloon-date-day"> {{consultation.date | date('d')}} </span><br>
+                <span class="timeline-balloon-date-month"> {{consultation.date | date('m')}}</span><br>
+                <span class="timeline-balloon-date-month"><small> {{consultation.date | date('Y')}} </small></span>
+            </div>
+            <div class="col-sm-6  timeline-item">
+                <div class="row">
+                    <div class="col-sm-11">
+                        <div class="timeline-panel debits">
+                            <ul class="timeline-panel-ul">
+                                <li><span class="">MOTIF DE LA CONSULTATION</span></li>
+                                <li><span class="importo"> {{consultation.motif}} </span></li>
+                                <li><span class="importo"> {{consultation.test}} </span></li>
+                                <!-- <li><span class="causale"> $row["Traitement_Consultation"] </span> </li>-->
+                                <li><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i>  {{consultation.date| date('d/m/Y')}} </small></p> </li>
+                            </ul>
+                        </div>
+                    </div>
+            {% if consultation.id %}
+                <a 	id="tip" class="brand-right m-btn mini rnd icn-only" data-placement=bottom title="Exporter la consultation en PDF" 
+                                                href="consultation_pdf.php?idP= $idpatient &idC= $idconsult " target="_blank">
+                                                <i class="icon-folder-open"></i>
+                                            </a>
+            {% endif %}     
+            </div>
+        </div>
+        <div class="col-sm-6  timeline-item">
+            <div class="row">
+                <div class="col-sm-offset-1 col-sm-11">
+                    <div class="timeline-panel credits">
+                        <ul class="timeline-panel-ul">
+                            <li><span class="">TRAITEMENT</span></li>
+                            <li><span class="importo"> {{consultation.traitement}} </span></li>
+                            <li><p><small class="text-muted"><i class="glyphicon glyphicon-time"></i>  {{consultation.date| date('d/m/Y')}} </small></p> </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div> #}
+{% endblock body %}

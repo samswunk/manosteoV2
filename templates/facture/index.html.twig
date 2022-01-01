@@ -1,0 +1,47 @@
+{% extends 'index2/base2.html.twig' %}
+
+{% block title %}Facture index{% endblock %}
+
+{% block body %}
+    <h1>Facture index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tarif</th>
+                <th>Paiement</th>
+                <th>NumeroCheque</th>
+                <th>Regler</th>
+                <th>Date</th>
+                <th>Numero</th>
+                <th>Impression</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for facture in factures %}
+            <tr>
+                <td>{{ facture.id }}</td>
+                <td>{{ facture.tarif }}</td>
+                <td>{{ facture.paiement ? 'Yes' : 'No' }}</td>
+                <td>{{ facture.numeroCheque }}</td>
+                <td>{{ facture.regler ? 'Yes' : 'No' }}</td>
+                <td>{{ facture.date ? facture.date|date('Y-m-d') : '' }}</td>
+                <td>{{ facture.numero }}</td>
+                <td>{{ facture.impression ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('facture_show', {'id': facture.id}) }}">show</a>
+                    <a href="{{ path('facture_edit', {'id': facture.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('facture_new') }}">Create new</a>
+{% endblock %}

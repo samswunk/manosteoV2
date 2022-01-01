@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'index2/base2.html.twig' %}
 
 {% block title %}Adresse index{% endblock %}
 
@@ -13,8 +13,8 @@
                 <th>Adresse2</th>
                 <th>CodePostal</th>
                 <th>Ville</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
+                {# <th>Latitude</th> #}
+                {# <th>Longitude</th> #}
                 <th>actions</th>
             </tr>
         </thead>
@@ -26,8 +26,8 @@
                 <td>{{ adresse.adresse2 }}</td>
                 <td>{{ adresse.codePostal }}</td>
                 <td>{{ adresse.ville }}</td>
-                <td>{{ adresse.latitude }}</td>
-                <td>{{ adresse.longitude }}</td>
+                {# <td>{{ adresse.latitude }}</td> #}
+                {# <td>{{ adresse.longitude }}</td> #}
                 <td>
                     <a href="{{ path('adresse_show', {'id': adresse.id}) }}">show</a>
                     <a href="{{ path('adresse_edit', {'id': adresse.id}) }}">edit</a>

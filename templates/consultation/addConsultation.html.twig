@@ -1,0 +1,98 @@
+{% extends 'index2/base2.html.twig' %}
+
+{% block title %}Nouvelle Consultation{% endblock %}
+
+{% block body %}
+    {% include ('patient/navbarPatient.html.twig') %}
+    {{ form_start(form,{'attr':{'id':'updateConsultations','class':'row'}}) }}
+    <div class="col-6 m-0 p-0 text-left border-0" style="width:40%;" id="divGauche">
+        <div class="accordion m-1 p-0 col-12" id="accordionAddConsult">
+            {# ############################################################## #}
+            {# ######################## CONSULTATION ######################## #}
+            {# ############################################################## #}
+            <div class="card m-1" id="cardConsultation">
+                <div    class="card-header activ" id="divCardConsultation" data-toggle="collapse" data-target="#divConsultation" aria-expanded="false" 
+                        aria-controls="divConsultation">
+                    <h5 class="mb-0 text-center text-bold text-dark">
+                        Consultation
+                    </h5>
+                </div> 
+                <div id="divConsultation" class="collapse active show" aria-labelledby="divCardConsultation" data-parent="#accordionAddConsult">
+                    <div class="card-body row">
+                            {% if form.consultations is defined %}
+                                {% for consultation in form.consultations %}
+                                    {% include "consultation/consultation.html.twig" %}
+                                {% endfor %}                            
+                            {% else %}
+                                {% include "consultation/consultation.html.twig" %}
+                            {% endif %}
+                    </div>
+                </div>   
+            </div>   
+            {# ############################################################## #}
+            {# ########################## FACTURE ########################### #}
+            {# ############################################################## #}
+            <div class="card m-1" id="cardFacture">
+                <div class="card-header" id="divCardFacture" data-toggle="collapse" data-target="#divFacture" aria-expanded="false" aria-controls="divFacture">
+                    <h5 class="mb-0 text-center text-bold text-dark">
+                        Facture
+                    </h5>
+                </div> 
+                <div id="divFacture" class="collapse" aria-labelledby="divCardFacture" data-parent="#accordionAddConsult">
+                    <div class="card-body m-0 p-0">
+                            {% if form.consultations is defined %}
+                                {% for consultation in form.consultations %}
+                                    {% include "facture/facture.html.twig" %}
+                                {% endfor %}                            
+                            {% else %}
+                                {% include "facture/facture.html.twig" %}
+                            {% endif %}                    
+                            {# {{ form_row(form.facture,{'attr':{'class':'row m-1 rounded bg-primary'}}) }} #}
+                    </div>
+                </div>   
+            </div>   
+        </div>  
+    </div>  
+    <div class="col-6 m-0 p-0 text-left border-0" style="width:40%;" id="divDroite">
+        <div class="accordion m-1 p-0 col-12" id="accordionAntecedents">            
+            {# ############################################################## #}
+            {# ######################### ANTECEDENTS ######################## #}
+            {# ############################################################## #}
+            {% if form.patient.antecedents %}
+                {% set form2 = form %}
+                {% set form = form.patient %}
+                    {% include "antecedent/antecedents.html.twig" %}
+            {% endif %}               
+            {% set form = form2 %}
+            {# ############################################################## #}
+            {# ######################### REMARQUES ########################## #}
+            {# ############################################################## #}
+            <div class="card m-1" id="cardRemarques">
+                <div class="card-header" id="divRemarques" data-toggle="collapse" data-target="#Remarques" aria-expanded="false" aria-controls="Remarques">
+                    <h5 class="mb-0 text-center text-bold text-dark">
+                        Remarques
+                    </h5>
+                </div> 
+                <div id="Remarques" class="collapse" aria-labelledby="divRemarques" data-parent="#accordionAntecedents">
+                    <div class="card-body row">
+                        {{ form_widget(form.patient.remarques    ,{'attr':{'class':'form-control col m-1',
+                                                                            'placeholder':'Remarques'}}) }}
+                    </div>
+                </div>   
+            </div>                   
+        </div>                       
+    </div>                       
+        <div class="border border-success" style="display:none;">
+            {{ form_row(form.patient) }}
+            {{ form_row(form._token) }}
+            {# {{ form_rest(form, {'render_rest': false}) }} #}
+        </div>
+    <div class="col-12">
+        <button class="btn-lg btn-primary m-0 mt-2 col" form="updateConsultations">Mettre à jour</button>
+    </div>
+    {{ form_end(form, {'render_rest': false}) }}
+{% endblock body %}
+{% block jsDateTimePicker %} 
+    appDateTimePickers(); 
+    appPaiement();
+{% endblock jsDateTimePicker %}

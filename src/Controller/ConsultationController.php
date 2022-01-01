@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Consultation;
+use App\Entity\Patient;
+use App\Form\AddConsultationType;
 use App\Form\ConsultationType;
+use App\Form\PatientType;
 use App\Repository\ConsultationRepository;
+use App\Repository\PatientRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,16 +19,61 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ConsultationController extends AbstractController
 {
-    /**
-     * @Route("/", name="consultation_index", methods={"GET"})
-     */
-    public function index(ConsultationRepository $consultationRepository): Response
+    
+    public function __construct(ConsultationRepository $consultationRepository,PatientRepository $patientRepository)
     {
-        return $this->render('consultation/index.html.twig', [
-            'consultations' => $consultationRepository->findAll(),
+        $this->consultationRepo = $consultationRepository;   
+        $this->patientRepo = $patientRepository;   
+    }
+    
+    /**
+     * @Route("/squelette", name="consultation_squelette", methods={"GET"})
+     */
+    public function squelette(): Response
+    {
+        return $this->render('consultation/localisation.html.twig', [
+            'consultations' => $this->consultationRepo->findAll(),
         ]);
     }
 
+    /**
+     * @Route("/", name="consultation_index", methods={"GET"})
+     */
+    public function index(): Response
+    {
+        return $this->render('consultation/index.html.twig', [
+            'consultations' => $this->consultationRepo->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/addConsultation/{idPatient}", name="addConsultation", methods={"GET","POST"})
+     */
+    public function addConsultation(Request $request,$idPatient): Response
+    {
+        $consultation = new Consultation();
+        $patient = $this->patientRepo->findOneBy(['id'=>$idPatient]);
+        $consultation->setPatient($patient);
+        
+        $form = $this->createForm(AddConsultationType::class, $consultation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($consultation);
+            $entityManager->flush();
+            // dd($consultation,$patient);
+            return $this->redirectToRoute('consultations_liste', [
+                'id'=>$idPatient
+            ], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('consultation/addConsultation.html.twig', [
+            'consultation'  => $consultation,
+            'patient'       => $patient,
+            'form'          => $form->createView(),
+        ]);
+    }
     /**
      * @Route("/new", name="consultation_new", methods={"GET","POST"})
      */
@@ -48,6 +97,27 @@ class ConsultationController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{idPatient}", name="listeConsultation", methods={"GET"})
+     */
+    public function listeConsult($idPatient): Response
+    {
+        $patient = $this->patientRepo->findOneBy(['id'=>$idPatient]);
+        $listeConsultations = $this->consultationRepo->findBy(['patient'=>$patient]);
+        
+        $form = $this->createForm(PatientType::class, $patient);
+
+        // dd($consultation,$patient);
+        // return $this->render('consultation/show.html.twig', [
+        return $this->render('consultation/addConsultation.html.twig', [
+        // return $this->render('patient/edit.html.twig', [
+            'listeConsultations'    => $listeConsultations,
+            'patient'               => $patient,
+            'form'                  => $form->createView(), 
+            'titre'                 => 'Liste des consultations'
+        ]);
+    }
+    
     /**
      * @Route("/{id}", name="consultation_show", methods={"GET"})
      */
@@ -83,12 +153,16 @@ class ConsultationController extends AbstractController
      */
     public function delete(Request $request, Consultation $consultation): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$consultation->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$consultation->getId(), $request->request->get('_token'))) 
+        {
+            $patient = $consultation->getPatient();
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($consultation);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('consultation_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('consultations_liste', [
+                'id'=> $patient->getId()
+        ], Response::HTTP_SEE_OTHER);
     }
 }

@@ -1,0 +1,331 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
+        <meta name="author" content="Coderthemes">
+        <title>{{ app_name }}</title>
+        {% block stylesheets %}
+            <link rel="shortcut icon" href="assets/images/favicon.ico">
+            <link rel="stylesheet" href="{{ asset('build/app.css') }}" >
+            <link rel="stylesheet" href="{{ asset('fullcalendar/core/main.css') }}" >
+            <link rel="stylesheet" href="{{ asset('fullcalendar/daygrid/main.css') }}" >
+            <link rel="stylesheet" href="{{ asset('fullcalendar/list/main.css') }}" >
+            <link rel="stylesheet" href="{{ asset('fullcalendar/timegrid/main.css') }}" >
+            {# <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.simplex.css') }}" > #}
+
+            <link rel="stylesheet" href="{{ asset('ubold/plugins/morris/morris.css') }}">
+            <link rel="stylesheet" href="{{ asset('ubold/plugins/cropper/cropper.css') }}">
+            <link rel="stylesheet" href="{{ asset('ubold/css/bootstrap.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}" >
+            <link rel="stylesheet" href="{{ asset('ubold/css/icons.css') }}" type="text/css" />
+            <link rel="stylesheet" href="{{ asset('ubold/css/style.css') }}" type="text/css" />
+            <link rel="stylesheet" href="{{ asset('bootstrap/css/old.bootstrap.min.css') }}" >
+
+            <script src="{{ asset('ubold/js/modernizr.min.js') }}"></script>
+
+            <link rel="stylesheet" href="{{ asset('jquery-ui/jquery-ui.css') }}" >
+            <link rel="stylesheet" href="{{ asset('datetimepicker/datetimepicker.css') }}">
+            <link rel="stylesheet" href="{{ asset('fontawesome/css/all.css') }}">
+            <link rel="stylesheet" href="{{ asset('datatable/css/dataTables.bootstrap4.min.css') }}" >
+            <link rel="stylesheet" href="{{ asset('/select2/css/select2.min.css') }}"/>
+            {# <link rel="stylesheet" href="{{ asset('css/appTimeline.css') }}"/> #}
+            <link rel="stylesheet" href="{{ asset('css/appTimeline2.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('css/appDatatable.css') }}"/>
+            {% block cssPatient %}{% endblock cssPatient %}
+            <style>
+            .bg-application {
+                background-color: #EE4423;
+                }
+            .color-application {
+                color: #EE4423;
+                }
+            .msr { visibility: hidden } /* make sure animated elements start hidden */
+
+            </style>
+        {% endblock %}
+    </head>
+    {% set UserId = null %} 
+    {% if app.user %}
+        {% set UserRole = 'Utilisateur' %} 
+        {% set UserId = app.user.id %} 
+        {% for role in app.user.roles %}
+            {% if role == 'ROLE_ADMIN' %}
+                {% set UserRole = 'Administrateur' %} 
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        {% set UserRole = 'Inconnu' %} 
+    {% endif %}
+<body class="widescreen fixed-left">
+    <div id="wrapper" class="forced">
+            <input  id="rdvIndex"  type="hidden"
+                    data-link     ="{{ path('patient_index') }}" 
+                    data-userId   ="{{ UserId ?? '' }}"
+                    data-userRole ="{{ UserRole }}">
+            <!-- Top Bar Start -->
+                {% include "index2/navbar2.html.twig" %}    
+                <!-- ========== Left Sidebar Start ========== -->
+                <div class="left side-menu">
+                        {% include "index2/leftnavbar2.html.twig" %}
+                </div>
+            {% if app.user %}
+            {% endif %}
+                {# {% include "navbar.html.twig" %} #}
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+                    <div class="container-fluid">
+                        {# SHOW ATELIER MULTI MODAL #}
+                            {# {% include("multi/new.html.twig") %} #}
+                        {# END ATELIER MUTLI MDAL #}
+                        {# MESSAGES #}
+                            <div class="col-12 m-0 p-0">
+                                {% for label, messages in app.flashes %}
+                                    {% for message in messages %}
+                                        <div class="flash-notice alert alert-{{ label }} border rounded shadow-lg">
+                                            <h4 class="mt-2 white">{{ message }}</h4>
+                                        </div>
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                        {# END MESSAGES #}
+                        {% if block("title") is defined %}
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4 class="page-title">{{ block('title') }}</h4>
+                                    {# <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="#">Ubold</a></li>
+                                        <li class="breadcrumb-item"><a href="#">Icons</a></li>
+                                        <li class="breadcrumb-item active">Font Awesome</li>
+                                    </ol> #}
+
+                                </div>
+                            </div>                        
+                        {% endif %}   
+                        {% block body %}
+                        {% endblock body %} 
+                    </div>
+                    {# <footer class="footer text-right">
+                        &copy; 2016 - 2018. All rights reserved.
+                    </footer> #}
+                </div>
+                {% include "index2/rightnavbar2.html.twig" %} 
+            </div>
+    </div>
+    {% block javascripts %}
+        <script>
+            var resizefunc = [];
+        </script>
+        <script type="text/javascript" src="{{ asset('ubold/js/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('ubold/js/popper.min.js') }}"></script> <!-- Popper for Bootstrap -->
+        <script type="text/javascript" src="{{ asset('ubold/js/bootstrap.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('ubold/js/detect.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('ubold/js/fastclick.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('ubold/js/jquery.slimscroll.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('ubold/js/jquery.blockUI.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('ubold/js/waves.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('ubold/js/wow.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('ubold/js/jquery.nicescroll.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('ubold/js/jquery.scrollTo.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('ubold/plugins/peity/jquery.peity.min.js') }}"></script>
+
+        <script type="text/javascript" src="{{ asset('ubold/plugins/waypoints/lib/jquery.waypoints.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('ubold/plugins/counterup/jquery.counterup.min.js') }}"></script>
+
+        {% block dashboard %}{% endblock dashboard %}
+
+        <script type="text/javascript" src="{{ asset('ubold/js/jquery.core.js') }}"></script>
+        <!-- <script type="text/javascript" src="{{ asset('ubold/js/jquery.app.js') }}"></script> -->
+        
+        <script type="text/javascript" src="{{ asset('ubold/plugins/moment/moment.js') }}">   </script>
+        <script type="text/javascript" src="{{ asset('moment/moment-with-locales.js') }}">    </script>
+        <script type="text/javascript" src="{{ asset('moment/moment-timezone.js') }}">        </script>
+
+        <script type="text/javascript" src="{{ asset('datetimepicker/datetimepicker.js') }}"> </script>
+        <script type="text/javascript" src="{{ asset('fullcalendar/core/main.js') }}">        </script>
+        <script type="text/javascript" src="{{ asset('fullcalendar/core/locales-all.js') }}"> </script>
+        <script type="text/javascript" src="{{ asset('fullcalendar/daygrid/main.js') }}">     </script>
+        <script type="text/javascript" src="{{ asset('fullcalendar/interaction/main.js') }}"> </script>
+        <script type="text/javascript" src="{{ asset('fullcalendar/list/main.js') }}">        </script>
+        <script type="text/javascript" src="{{ asset('fullcalendar/timegrid/main.js') }}">    </script>
+        <script type="text/javascript" src="{{ asset('tarteaucitron/tarteaucitron.js')}}">    </script>
+        {# <script type="text/javascript" src="{{ asset('js/tarteaucitron.js')}}">               </script> #}
+        <script type="text/javascript" src="{{ asset('/select2/js/select2.min.js') }}">       </script>
+        <script type="text/javascript" src="{{ asset('datatable/js/datatable.min.js') }}">    </script>
+        <script type="text/javascript" src="{{ asset('datatable/js/dataTables.bootstrap4.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('/js/axios.min.js') }}">                 </script>
+        <script type="text/javascript" src="{{ asset('/js/ScrollReveal.js') }}">              </script>
+
+        <script type="text/javascript" src="{{ asset('js/appUbold.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/appCounterup.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/appDateTimePickers.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/appScrollReveal.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/appCalendrier.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/appPaiement.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+        <script type="text/javascript">
+        //   jQuery(document).ready(function($) {
+        var resizefunc = [];
+            const sr = ScrollReveal({
+            reset:true
+            });     
+        $(document).ready(function()
+        {
+            $("#sidebar-menu a").each(function() {
+            var pageUrl = window.location.href.split(/[?#]/)[0];
+                    if (this.href == pageUrl) {  
+                    $(this).addClass("active");
+                    $(this).parent().addClass("active"); // add active to li of the current link
+                    $(this).parent().parent().prev().addClass("active"); // add active class to an anchor
+                    $(this).parent().parent().prev().click(); // click the item to make it drop
+                }
+            });        
+            // appAlert();
+            // appMoment();
+            // appUbold();
+            {% block jsDashboard %}{% endblock jsDashboard %}
+            {% block jsDateTimePicker %}{% endblock jsDateTimePicker %}
+            // appSelect2();
+            // appDateTimePickers();
+            // appScrollReveal();
+            
+            /*
+            // appDataTable();
+            // appScrollReveal();
+            /*appCalendrier();
+            appOuvertureSession();
+            appGoogleMap();*/
+
+            /*$.extend( $.fn.dataTable.defaults, 
+            {/*
+            $("#accordion").show();
+            $("#accordion2").hide();
+            $("#accordion3").hide();
+            $("#DataTables_Table_0_wrapper").show();
+            $(".nav-link").on('click',function()
+            {
+            console.log($(this).attr('class'));
+            console.log('clic'+$(this).attr('class'));
+            switch($(this).attr('class'))
+            {
+                case 'new':
+                case 'newConsult':
+                    $("#accordion").hide();
+                    $("#accordion2").show();
+                    $("#accordion3").show();
+                    $("#DataTables_Table_0_wrapper").hide();
+                    break;
+                case 'edit':
+                    $("#accordion").show();
+                    $("#accordion2").hide();
+                    $("#accordion3").hide();
+                    $("#DataTables_Table_0_wrapper").show();
+                    break;
+                case 'consultation_r':
+                case 'consultation':
+                case 'consult':
+                case 'listeConsult':
+                    $("#consultation_r").hide();
+                    $("#accordion").hide();
+                    $("#accordion2").show();
+                    $("#accordion3").show();
+                    $("#DataTables_Table_0_wrapper").hide();
+                    break;
+                case 'courriers':
+                    $("#accordion").hide();
+                    $("#DataTables_Table_0_wrapper").hide();
+                    $("#accordion2").show();
+                    $("#accordion3").show();
+                    break;
+                case 'documents':
+                    break;
+            }
+            })        */
+            $('.dataTable').DataTable({
+            // searching: false,
+            "lengthMenu": [ 10, 25, 50, 75, 100 ],
+            'pageLength' : 30,
+            "dom": "<'row'<'col-sm-6 search-query'f><'col-sm-6'l>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+            "language": 
+            {
+                "sEmptyTable":     "Aucune donnée disponible dans le tableau",
+                "sInfo":           "Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
+                "sInfoEmpty":      "Affichage de l'élément 0 à 0 sur 0 élément",
+                "sInfoFiltered":   "(filtré à partir de _MAX_ éléments au total)",
+                "sInfoPostFix":    "",
+                "sInfoThousands":  ",",
+                "sLengthMenu":     "Afficher _MENU_ éléments",
+                "sLoadingRecords": "Chargement...",
+                "sProcessing":     "Traitement...",
+                "sSearch":         "Rechercher :",
+                "sZeroRecords":    "Aucun élément correspondant trouvé",
+                "oPaginate": {
+                            "sFirst":    "Premier",
+                            "sLast":     "Dernier",
+                            "sNext":     "Suivant",
+                            "sPrevious": "Précédent"
+                                },
+                "oAria": 
+                        {
+                            "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+                            "sSortDescending": ": activer pour trier la colonne par ordre décroissant"
+                        },
+                "select": 
+                {
+                    "rows": 
+                    {
+                    "_": "%d lignes sélectionnées",
+                    "0": "Aucune ligne sélectionnée",
+                    "1": "1 ligne sélectionnée"
+                    } 
+                },
+                search: "",
+                searchPlaceholder: "Rechercher"
+            }
+            // "order": [[ 1, "desc" ]]
+            });    
+            // FIN DATATABLE
+            
+            // $('#myModal').on('shown', function () 
+            // {
+            //     initialize();
+            // });
+            // $('#myTab a').click(function (e) 
+            // {
+            //     e.preventDefault();
+            //     $(this).tab('show');
+            // })
+            // $(".alert").alert(),
+
+            // $('#myModal').on('shown', function () {
+            //     initialize();
+            // });
+
+            /* $('a').tooltip({'trigger' : 'hover'}),
+            $('a').tooltip({'trigger' : 'hover'});
+            $('title').tooltip({'trigger' : 'hover'});
+            $('img').tooltip({'trigger' : 'hover'});
+                    $('input[type=file]').bootstrapFileInput(),
+            $('.file-inputs').bootstrapFileInput();
+            $('input.myClass').prettyCheckable({ 
+                color: 'red'
+            });
+            */
+                        
+            // $('.MoyenDePaiement').click(function() 
+            // {
+            //     if ($(this).attr('value')!=1) { $("#Num_Cheque").fadeOut(); }
+            //     else { $("#Num_Cheque").fadeIn(); }
+            // });
+
+            {% block jsCalendar %}{% endblock jsCalendar %}
+            // {% block dataTable %}{% endblock dataTable %}
+
+        });
+        </script>
+    {% endblock %}
+    </body>
+</html>

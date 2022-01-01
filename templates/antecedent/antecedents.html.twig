@@ -1,0 +1,117 @@
+<div class="card m-1" id="cardAntecedents">
+    <div class="card-header" id="divAntecedent" data-toggle="collapse" data-target="#Antecedent" aria-expanded="false" aria-controls="Antecedent">
+        <h5 class="mb-0 text-center text-bold text-dark">
+            Antécedents
+        </h5>
+    </div> 
+    <div id="Antecedent" class="collapse active show m-0" aria-labelledby="divAntecedent" data-parent="#accordionAntecedents">
+        <div class="card-body row m-0 p-0">
+            <ul class="nav nav-tabs m-0">
+                <li class="nav-item m-0"><a class="nav-link active m-0 p-2" data-toggle="tab" href="#antecedents">Général / Autres</a></li>
+                <li class="nav-item m-0 dropdown">
+                    <a class="nav-link dropdown-toggle m-0 p-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Traumatologie</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item m-0 p-2"   data-toggle="tab" href="#fractures">Fracture</a>
+                            <a class="dropdown-item m-0 p-2"   data-toggle="tab" href="#entorses">Entorses</a>
+                            <a class="dropdown-item m-0 p-2"   data-toggle="tab" href="#accidents">Accidents</a>
+                            <a class="dropdown-item m-0 p-2"   data-toggle="tab" href="#operations">Opérations</a>
+                        </div>
+                </li>
+                <li class="nav-item m-0 p-0"><a class="nav-link m-0 p-2"        data-toggle="tab" href="#orl">ORL</a></li>
+                <li class="nav-item m-0 p-0"><a class="nav-link m-0 p-2"        data-toggle="tab" href="#Neurologie">Neurologie</a></li>
+                <li class="nav-item m-0 p-0"><a class="nav-link m-0 p-2"        data-toggle="tab" href="#VR">Voies Respiratoires</a></li>
+                <li class="nav-item m-0 p-0"><a class="nav-link m-0 p-2"        data-toggle="tab" href="#allergie">Allergies</a></li>
+                <li class="nav-item m-0 p-0"><a class="nav-link m-0 p-2"        data-toggle="tab" href="#cardio">Cardiologie</a></li>
+                <li class="nav-item m-0 p-0"><a class="nav-link m-0 p-2"        data-toggle="tab" href="#digest">Digestif</a></li>
+                <li class="nav-item m-0 p-0"><a class="nav-link m-0 p-2"        data-toggle="tab" href="#uro">Urologie</a></li>
+                <li class="nav-item m-0 p-0"><a class="nav-link m-0 p-2"        data-toggle="tab" href="#gyneco">Gynécologie</a></li>
+                <li class="nav-item m-0 p-0"><a class="nav-link m-0 p-2"        data-toggle="tab" href="#grossesse">Grossesse</a></li>
+                <li class="nav-item m-0 p-0"><a class="nav-link m-0 p-2"        data-toggle="tab" href="#accouchement">Accouchement</a></li>
+                <li class="nav-item m-0 p-0 dropdown">
+                    <a class="nav-link dropdown-toggle m-0 p-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Pédiatrie</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item"   data-toggle="tab" href="#prenat">Période prénatale</a>
+                            <a class="dropdown-item"   data-toggle="tab" href="#vaccin">Vaccination</a>
+                        </div>
+                </li>                            
+                <li class="nav-item"><a class="nav-link m-0 p-2"        data-toggle="tab" href="#sommeil">Sommeil</a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content col-12 m-0 p-0">
+                <div class="tab-pane fade active show" id="antecedents">
+                    {{ form_row(form.antecedents) }}
+                </div>
+                <div class="tab-pane fade" id="orl">
+                    {{ form_row(form.antecedent.orl) }}
+                </div>
+                <div class="tab-pane fade" id="Neurologie">
+                        {{ form_row(form.antecedent.neuro) }}
+                </div>
+                <div class="tab-pane fade" id="VR">
+                    {{ form_row(form.antecedent.vr) }}
+                </div>
+                <div class="tab-pane fade" id="allergie">
+                    {{ form_row(form.antecedent.allergie) }}
+                </div>
+                <div class="tab-pane fade" id="cardio">
+                    {{ form_row(form.antecedent.cardio) }}
+                </div>
+                <div class="tab-pane fade" id="digest">
+                    {{ form_row(form.antecedent.digest) }}
+                </div>
+                <div class="tab-pane fade" id="uro">
+                    {{ form_row(form.antecedent.uro) }}
+                </div>
+                <div class="tab-pane fade" id="gyneco">
+                    {{ form_row(form.antecedent.gyneco) }}
+                </div>
+                <div class="tab-pane fade" id="sommeil">
+                    {{ form_row(form.antecedent.sommeil) }}
+                </div>
+                <div class="tab-pane fade" id="grossesse">
+                    {{ form_row(form.antecedent.grossesse) }}
+                </div>
+                <div class="tab-pane fade" id="vaccin">
+                    {{ form_row(form.antecedent.vaccin) }}
+                </div>
+                <div class="tab-pane fade" id="accouchement">
+                    <div class="row m-0 p-0">
+                        {# {{ form_widget(form.accouchement.difficultes,{'attr':{'class':'form-control col-2 m-1'}}) }} #}
+                        {# <div class="col-4 m-0 border form-group">{{ form_label(form.accouchement.difficultes) }}</div> #}
+                        <div class="col-4 form-group m-0">{{ form_row(form.accouchement.difficultes        ,{'label':'Difficultes','attr':{'placeholder':'difficultes','class':'form-control'}})}}</div>
+                        <div class="col-2 form-group m-0">{{ form_row(form.accouchement.conditions         ,{'label':'Conditions','attr':{'placeholder':'conditions','class':'form-control'}})}}</div>
+                        <div class="col-2 form-group m-0">{{ form_row(form.accouchement.presentation       ,{'label':'Presentation','attr':{'placeholder':'presentation','class':'form-control'}})}}</div>
+                        <div class="col-4 form-group m-0 row">
+                            <span class="col-6 mt-3">Péridurale : </span>{{ form_widget(form.accouchement.peridurale         ,{'label':'Péridurale','attr':{'placeholder':'peridurale'   ,'class':'form-check col-6 mt-3'}})}}
+                            <span class="col-6">Épisiotomie :</span>{{ form_widget(form.accouchement.episiotomie        ,{'label':'Épisiotomie','attr':{'placeholder':'episiotomie' ,'class':'form-check col-6'}})}}
+                        </div>
+                        <div class="col-6 form-group m-0">{{ form_row(form.accouchement.instrumentalisation,{'label':'Instrumentalisation','attr':{'placeholder':'instrumentalisation','class':'form-control'}})}}</div>
+                        <div class="col-6 form-group m-0">{{ form_row(form.accouchement.remarques          ,{'label':'Remarques','attr':{'placeholder':'remarques','class':'form-control'}})}}</div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="prenat">
+                    {{ form_row(form.pediatrie.taille) }}
+                    {{ form_row(form.pediatrie.poids) }}
+                    {{ form_row(form.pediatrie.pc) }}
+                    {{ form_row(form.pediatrie.apgar1) }}
+                    {{ form_row(form.pediatrie.apgar5) }}
+                    {{ form_row(form.pediatrie.apgar10) }}
+                    {{ form_row(form.pediatrie.allaitement) }}
+                    {{ form_row(form.pediatrie.tempsAllaitement) }}
+                    {{ form_widget(form.pediatrie.remarques) }}
+                </div>
+                <div class="tab-pane fade" id="fractures">
+                    {{ form_row(form.traumato.fractures) }}
+                </div>
+                <div class="tab-pane fade" id="entorses">
+                    {{ form_row(form.traumato.entorses) }}
+                </div>
+                <div class="tab-pane fade" id="accidents">
+                    {{ form_row(form.traumato.accidents) }}
+                </div>
+                <div class="tab-pane fade" id="operations">
+                    {{ form_row(form.traumato.operations) }}
+                </div>
+            </div>
+        </div>
+    </div>   
+</div>   

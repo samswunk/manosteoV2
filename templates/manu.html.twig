@@ -1,0 +1,76 @@
+{% set referer = app.request.server.get('HTTP_REFERER')|default('/') %}
+{% set host = app.request.server.get('HTTP_HOST')|default('/') %}
+{% set scheme = app.request.server.get('SYMFONY_DEFAULT_ROUTE_SCHEME')|default('/') %}
+{% set chemin = scheme ~ '://' ~ host ~ '/' %}
+{% set provenance = referer|replace({(chemin): '','/':''}) %}
+{% set current_path = app.request.get('_route') %}
+{# PROVENANCE : {{provenance}}<br>
+host: {{host}}<br>
+scheme : {{scheme}}<br>
+current_path : *{{ current_path }}*
+      <pre>
+        {{ dump(patient) }}
+      </pre> #}
+{% if current_path %}
+  {% if current_path == "consultation" %}
+  {% elseif (current_path in ["patient_new","patient_edit"]) %}
+    <ul class="nav nav-pills flex-column">
+      <li class="nav-item">
+        <a class="nav-link active" href="#">Active</a>
+      </li>    
+      <li class="nav-item"><a id="liste" class="nav-link active" href="{{ path('patient_index') }}">Liste des Patients</a></li>
+      {% if patient %}
+        <li class="nav-item"><a id="new"          class="nav-link" href="{{ path('patient_new') }}">Nouveau Patient</a></li>
+        <li class="nav-item"><a id="edit"         class="nav-link" href="#">Coordonnées</a></li>
+        <li class="nav-item"><a id="consult"      class="nav-link" href="#" target="_self">Consultation</a></li>
+        <li class="nav-item"><a id="courriers"    class="nav-link" href="#" target="_self">Courriers <span class="badge"><?php echo $courrierok; ?></span></a></li>
+        <li class="nav-item"><a id="documents"    class="nav-link" href="#" target="_self">Documents <span class="badge"><?php echo $docok; ?></span></a></li>
+      {% else %}
+        <li class="nav-item"><a id="new"          class="nav-link" href="adresse.php">Nouveau Patient</a></li>
+      {% endif %} 
+    </ul>
+  {% elseif current_path == "consultation_new" %}
+          {# {% switch nextexist %}
+          {% case 0 %}
+              ''
+          {% case 1 %}
+              <a 	id="pop" class="brand-right m-btn mini rnd icn-only" style="height:100px"
+                          href="consultation.php?id='.$idconsultnext.'" 
+                          data-placement="bottom" title="Consultation du '.$datenext.'" 
+                          data-content="<b>Motif</b> : <br> '.$motifnext.'<br><b>Tests</b> : <br> '.$testnext.'<br><b>Traitements</b> : <br> '.$traitementnext.'">
+                          <i class="icon-forward"></i></a>
+          {% default %}
+                      <a 	id="tip3" class="brand-right m-btn mini rnd icn-only" href="consultation.php?idP='.$idpatient.'"  
+                          data-placement="bottom" title="Nouvelle Consultation"><i class="icon-forward"></i></a>
+          {% endswitch nextexist %} #}
+          <a class="brand-right" href="adresse.php?idP='.$idpatient.'"> '.$NP_patient." le ".$Date .'</a>
+          {% if prevexist %}
+              <a 	id="pop2" class="brand-right m-btn mini rnd icn-only"  style="height:100%; margin-right:5px;"
+                          href="consultation.php?id='.$idconsultprev.'" 
+                          data-placement=bottom title="Consultation du '.$dateprev.'" 
+                          data-content="<b>Motif</b> : <br> '.$motifprev.'<br><b>Tests</b> : <br> '.$testprev.'<br><b>Traitements</b> : <br> '.$traitementprev.'">
+                          <i class="icon-backward"></i></a>
+          {% endif %}
+  {% elseif current_path == "osteo" %}
+      <a class="brand-right" href="osteo.php">INFORMATIONS OSTEOPATHE</a>
+  {% elseif current_path ==  "compta" %}
+      <a class="brand-right" href="compta.php">COMPTABILITE</a> 
+  {% elseif current_path ==  "stat_age_graph" %}
+      <a class="brand-right" href="stat_age_graph.php">PART HOMME/FEMME PAR AGES</a>
+  {% else %}
+      {% if patient.id is defined %}
+            <a  class="brand-right m-btn mini rnd icn-only" 
+                href="../ressources/class/vcard/script_vcard.php?vcard='.$idpatient.'" 
+                data-placement="bottom" 
+                title="Exporter les coordonnées en vCard vers votre Carnet d\'Adresse ou votre SmartPhone"><i class="icon-share"></i></a>
+            <a  class="brand-right m-btn mini rnd icn-only" 
+                href="suivi.php?idP='.$idpatient.'" target="_blank" data-placement="bottom" 
+                title="Exporter en PDF les coordonnées et les consultations"><i class="icon-folder-open"></i></a>
+            <a class="brand-right" href="adresse.php?idP='.$idpatient.'"> $Nom $Prenom</a>
+      {% else %}
+            <a class="brand-right" href="adresse.php">NOUVEAU PATIENT</a>
+      {% endif %}
+  {% endif %}
+{% else %}
+  provenance est vide
+{% endif %}

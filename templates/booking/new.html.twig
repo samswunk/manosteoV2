@@ -1,0 +1,16 @@
+{# templates/booking/calendar.html.twig #}
+{% extends 'index2/base2.html.twig' %}
+
+{% block title %}Ouverture de Rdv{% endblock %}
+
+{% block body %}
+      <div class="body row" >
+        <div id="rdv-holder" class="col-12">
+          {{ include('./booking/_form.html.twig') }}
+        </div>
+      </div>
+        <div class="center text-center">
+          <a class="btn btn-secondary"  href="{{ path('booking_index') }}" class="btn btn-secondary">Retour</a>
+          {# <a class="btn btn-primary"    href="{{ path('booking_new') }}">Prendre rdv</a> #}
+        </div>
+{% endblock %}

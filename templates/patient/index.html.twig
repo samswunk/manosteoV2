@@ -1,19 +1,16 @@
-{% extends 'base.html.twig' %}
+{% extends 'index2/base2.html.twig' %}
 
-{% block title %}Patient index{% endblock %}
+{% block title %}Liste des patients{% endblock %}
+
+{% block size %}10{% endblock size %}
 
 {% block body %}
-
-<div data-role="page">
-	<div data-role="header" data-theme="b">
-		<h1>Patients</h1>
+	{# <div data-role="header" data-theme="b">
 		<a href="{{ path('app_index') }}" data-icon="home" data-iconpos="notext" data-transition="flip"  class="ui-btn-left">retour accueil</a>
 		<a href="{{ path('patient_new') }}" data-icon="plus" data-iconpos="right" data-transition="flip"  class="ui-btn-right">Ajouter</a>
-	</div><!-- /header -->
-	<div data-role="content">	
-        <ul data-role="listview" data-autodividers="true" data-filter="true" data-inset="true">
-            <table  class="table table-condensed table-hover compact dataTable no-footer" 
-                    id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+	</div><!-- /header --> #}
+        <table  class="table table-bordered table-hover dataTable no-footer" 
+                id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
             <thead>
                 <tr role="row">
                     <th class="sorting ui-state-default sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" 
@@ -47,48 +44,65 @@
                             <a  href="../ressources/class/vcard/script_vcard_all.php" class="m-btn rnd green icn-only" target="_self" 
                                 data-placement="left" title="" 
                                 data-original-title="Exporter les coordonnées de TOUT vos patients en vCard vers votre Carnet d'adresse ou votre SmartPhone">
-                                <i class="icon-share"></i>
+                                <i class="fa fa-share-alt"></i>
                             </a>      
-                            <span class="DataTables_sort_icon css_right ui-icon ui-icon-caret-2-n-s"></span>
                         </div>
+                    </th>
+                    <th>
+                        Actions
                     </th>
                 </tr>
             </thead>
             <tbody>
-        {% for patient in patients %}
-            <tr>
-                {# <td>{{ patient.id }}</td> #}
-                <td>{{ patient.Nom }} {{ patient.prenom }}</td>
-                <td>{{ patient.telephone.telephone }} / {{ patient.telephone.mobile }}</td>
-                {# <td>{{ patient.sexe }}</td> #}
-                <td>
-                    <a href="{{ path('consultations_show', {'id': patient.id}) }}" style="border:0" title="" data-original-title="Afficher directement une nouvelle consultation">
-			            <div class="badge badge-info">{{ patient.consultations | length }}</div>
-                    </a>
-                     visite{% if patient.consultations | length > 1 %}s{% endif %}
-                </td>
-                {% set lastConsult = patient.consultations|last %}
-                <td>{% if lastConsult %}{{ lastConsult.date }}{% endif %}</td>
-                <td>{{ patient.dateNaissance ? patient.dateNaissance|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a  href="../ressources/class/vcard/script_vcard.php?vcard=49" class="m-btn rnd icn-only" target="_self" 
-                        data-placement="left" title="" 
-                        data-original-title="Exporter les coordonnées de {{ patient.prenom }} {{ patient.Nom }} en vCard vers votre Carnet d'adresse ou votre SmartPhone">
-                        <i class="icon-share"></i>
-                    </a>
-                </td>
-                <td>
-                    <a href="{{ path('patient_show', {'id': patient.id}) }}">show</a>
-                    <a href="{{ path('patient_edit', {'id': patient.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                {% for patient in patients %}
+                    <tr>
+                        {# <td>{{ patient.id }}</td> #}
+                        <td>
+                            <a  href="{{ path('patient_edit', {'id': patient.id,'origine':'patient'}) }}" style="border:0; color:#64799e;" title="" 
+                                data-original-title="Afficher la fiche patient">
+                                <i class="fa fa-{{ patient.sexe ==1 ? "mars" : "venus" }}"></i> {{ patient.nom }} {{ patient.prenom }}
+                            </a>
+                        </td>
+                        <td>{{ patient.telephone.telephone ?? '' }} / {{ patient.telephone.mobile ?? '' }}</td>
+                        {# <td>{{ patient.sexe }}</td> #}
+                        <td>
+                            <a href="{{ path('consultation_new', {'id': patient.id}) }}" style="border:0" title="" data-original-title="Afficher directement une nouvelle consultation">
+                                <div class="badge badge-info">{{ patient.consultations | length }}</div>
+                            </a>
+                            visite{% if patient.consultations | length > 1 %}s{% endif %}
+                        </td>
+                        {% set lastConsult = patient.consultations|last %}
+                        <td>{% if lastConsult %}{{ lastConsult.date|date('d/m/Y') }}{% endif %}</td>
+                        {# <td>{{ patient.dateNaissance ? patient.dateNaissance|date('Y-m-d') : '' }}</td> #}
+                        <td>
+                            <a  href="../ressources/class/vcard/script_vcard.php?vcard=49" class="m-btn rnd icn-only" target="_self" 
+                                data-placement="left" title="" 
+                                data-original-title="Exporter les coordonnées de {{ patient.prenom }} {{ patient.Nom }} en vCard vers votre Carnet d'adresse ou votre SmartPhone">
+                                <i class="fa fa-share-alt"></i>
+                            </a>
+                        </td>
+                        <td  class="text-center m-0 p-0">
+                            <div class="row p-0" style="margin-left:0.4em;margin-right:0.4em;">
+                                {% set classBtn = 'sm' %}
+                                <div class="col-3 m-0 p-0 mr-2 mt-1">
+                                    {{ include('patient/_delete_form.html.twig') }}
+                                </div>
+                                <div class="col-3 m-0 p-0 mr-2 mt-1">
+                                    <a style="height:21px;" class="btn btn-sm btn-success small" href="{{ path('patient_show', {'id': patient.id}) }}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                </div>
+                                <div class="col-3 m-0 p-0 mt-1">
+                                    <a style="height:21px;" class="btn btn-sm btn-primary small" href="{{ path('patient_show', {'id': patient.id}) }}"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="9">no records found</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
     <a href="{{ path('patient_new') }}">Create new</a>
 {% endblock %}

@@ -1,0 +1,30 @@
+<div id="consultation" class="col m-0 p-0">
+    <div>
+        <label for="consultation_date" class="required">Date de la consultation</label>
+        <input  type="text" id="consultation_date" name="consultation[date]" required="required" class="form-control datepicker"      
+                data-provide="datepicker" format="dd/MM/yyyy" input="string" input_format="y-M-d" 
+                value="{{ consultation.date.vars.value ?? ('now' | date("d/m/Y")) }}"/>
+    </div>
+    <div>
+        {# <label for="consultation_motif" class="required">Motif</label> #}
+        <textarea   id="consultation_motif" name="consultation[motif]" required="required" class="form-control" 
+                    placeholder="Motif de consultation">{{ consultation.motif.vars.value ?? '' }}</textarea>
+    </div>
+    <div>
+        {# <label for="consultation_test" class="required">Test</label> #}
+        <textarea   id="consultation_test" name="consultation[test]" required="required" class="form-control" 
+                    placeholder="Tests">{{ consultation.test.vars.value ?? '' }}</textarea>
+    </div>
+    <div>
+        {# <label for="consultation_traitement" class="required">Traitement</label> #}
+        <textarea   id="consultation_traitement" name="consultation[traitement]" required="required" class="form-control" 
+                    placeholder="Traitements">{{ consultation.traitement.vars.value ?? '' }}</textarea>
+    </div>
+    <div>
+        <label for="consultation_domicile"> Consultation à domicile</label>
+        <input  type="checkbox" id="consultation_domicile" name="consultation[domicile]" 
+                value="{{ consultation.domicile.vars.value ?? '' }}" />
+    </div>
+    {# <input type="hidden" id="consultation__token" name="consultation[_token]" value="consultation" /> #}
+{# <button class="btn btn-success col">Save</button> #}
+</div>

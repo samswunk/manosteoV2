@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -22,6 +23,7 @@ class PatientType extends AbstractType
         $builder
             // ->setAction('target_route')
             // ->setMethod('GET')
+            ->add('id')
             ->add('Nom', TextType::class, [
                 'attr' => 
                     [   'class'       => 'form-control',
@@ -57,6 +59,7 @@ class PatientType extends AbstractType
                      ],
                  'label' => "Situation",
              ])
+
             ->add('sexe', ChoiceType::class, [
                 'expanded' => false,
                 'multiple' => false,
@@ -75,7 +78,15 @@ class PatientType extends AbstractType
             ->add('Profession', TextType::class, [
                 'attr' => 
                     [   'class'       => 'form-control',
-                        'placeholder' => 'Profession',
+                        'placeholder' => 'Profession / Scolarité',
+                    ],
+                
+                'required'      => false
+            ])
+            ->add('loisir', TextType::class, [
+                'attr' => 
+                    [   'class'       => 'form-control',
+                        'placeholder' => 'Loisir',
                     ],
                 
                 'required'      => false
@@ -86,15 +97,33 @@ class PatientType extends AbstractType
                         'placeholder' => 'N° Sécu',
                     ],
                 
-                'required'      => true
+                'required'      => false
             ])
+            ->add('mutuelle', TextType::class, [
+                'attr' => 
+                    [   'class'       => 'form-control',
+                        'placeholder' => 'Mutuelle',
+                    ],
+                'required'      => false
+            ])
+            ->add('pref_manuelle', ChoiceType::class, [
+                'expanded' => false,
+                'multiple' => false,
+                'choices' => array(
+                    'Droitier' => '1',
+                    'Gaucher' => '2'
+                 ),
+                 'placeholder' => 'Préférence manuelle',
+                 'label' => 'Préférence manuelle',
+                 'required'      => false
+             ])            
             ->add('dateNaissance', DateTimeType::class, [
                 'widget'=> 'single_text',
                 'required' => true,
                 'attr' => 
                     [
-                        'class' => 'form-control datetimepicker',
-                        'data-provide' => 'datetimepicker',
+                        'class' => 'form-control datepicker',
+                        'data-provide' => 'datepicker',
                         'format'=> 'dd/MM/yyyy',
                         'input' => 'string',
                         'input_format' => 'y-M-d'
@@ -108,7 +137,14 @@ class PatientType extends AbstractType
                     [   'class'       => 'form-control',
                         'placeholder' => 'Remarques',
                     ],
-                
+                'required'      => false
+            ])
+            ->add('antecedents', TextareaType::class, [
+                'attr' => 
+                    [   'class'         => 'form-control',
+                        'placeholder'   => 'Antécédents',
+                        'label'         => 'Antécédentdents'
+                    ],
                 'required'      => false
             ])
             
@@ -120,11 +156,16 @@ class PatientType extends AbstractType
                 'required'      => false
             ])
             ->add('adresse'     , AdresseType::class)
-            ->add('telephone'   , TelephoneType::class)
-            // ->add('antecedent'  , AntecedentType::class)
-            // ->add('accouchement', AccouchementType::class)
-            // ->add('pediatrie'   , PediatrieType::class)
-            // ->add('traumato'    , TraumatoType::class)
+            ->add('telephone'   , TelephoneType::class, [
+                'required'      => false
+            ])
+            // ->add('consultations', CollectionType::class, [
+            //     'entry_type' => ConsultationType::class
+            // ])
+            ->add('antecedent'  , AntecedentType::class)
+            ->add('accouchement', AccouchementType::class)
+            ->add('pediatrie'   , PediatrieType::class)
+            ->add('traumato'    , TraumatoType::class)
             ->add('envoyePar'   ,EntityType::class, [
                 // looks for choices from this entity
                 'class' => EnvoyePar::class,

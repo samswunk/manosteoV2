@@ -13,8 +13,9 @@ class AppController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('index.html.twig', [
+        return $this->render('index2/index2.html.twig', [
             'controller_name' => 'AppController',
         ]);
+        return $this->redirectToRoute('patient_index');
     }
 }

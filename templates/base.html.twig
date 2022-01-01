@@ -11,13 +11,17 @@
 <link rel="stylesheet" href="{{ asset('fontawesome/css/all.css') }}">
 <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}" >
 <link rel="stylesheet" href="{{ asset('datatable/css/dataTables.bootstrap4.min.css') }}" >
-<link rel="stylesheet" href="{{ '/select2/css/select2.min.css' }}"/>
+<link rel="stylesheet" href="{{ asset('/select2/css/select2.min.css') }}"/>
+<link rel="stylesheet" href="{{ asset('css/appTimeline.css') }}"/>
+{# <link rel="stylesheet" href="{{ asset('css/appTimeline2.css') }}"/> #}
+<link rel="stylesheet" href="{{ asset('css/appDatatable.css') }}"/>
+{% block cssPatient %}{% endblock cssPatient %}
 
 <style>
-  .bg-chauffatec {
+  .bg-application {
       background-color: #EE4423;
     }
-  .color-chauffatec {
+  .color-application {
       color: #EE4423;
     }
   .msr { visibility: hidden } /* make sure animated elements start hidden */
@@ -36,113 +40,9 @@
 {% else %}
   {% set UserRole = 'Inconnu' %} 
 {% endif %}
-<body class="container-fluid"  
+<body class="container-fluid m-0 p-0"  
       style="background-color: #EEF2F6; font-family: Roboto,sans-serif;">
-    <nav class="navbar navbar-expand-lg fixed-top navbar-light p-0">
-      {# <a class=" text-white p-0 rounded" href="{{ path('app_index') }}"> #}
-        {# <img width="50px" src="{{ asset('img/logo.png') }}" alt=""></a> #}
-      <!--style="font-weight: 300; font-size: 1.5rem;" <strong>SARL La Boite à Cuisine</strong>  -->
-      <button   class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" 
-                aria-expanded="false" aria-label="Toggle navigation">
-        <span   class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse border rounded bg-chauffatec p-0" id="navbarColor01">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active ml-2">
-                <a class="nav-link text-white" href="{{ path('app_index') }}">Accueil <span class="sr-only">(current)</span></a>
-            </li>
-          <li class="nav-item active ml-2">
-            <a class="nav-link text-white" href="{{ path('consultation_index') }}">consultation <span class="sr-only">Nos ateliers</span></a>
-          </li>
-          <li class="nav-item active ml-2">
-            <a class="nav-link text-white" href="{{ path('patient_index') }}">Patient <span class="sr-only">Nos ateliers</span></a>
-          </li>
-        </ul>
-        {# <ul class="navbar-nav mr-auto">
-          <li class="nav-item active ml-2">
-            <a class="nav-link text-white" href="{{ path('app_index') }}">Accueil <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item active ml-2">
-            <a class="nav-link text-white" href="{{ path('consultation_index') }}">consultation <span class="sr-only">Nos ateliers</span></a>
-          </li>
-          <li class="nav-item active ml-2">
-            <a class="nav-link text-white" href="{{ path('recette_liste') }}">Nos recettes <span class="sr-only">Nos recettes</span></a>
-          </li>
-          <li class="nav-item active ml-2">
-            <a class="nav-link text-white" href="{{ path('app_qui') }}">Qui sommes-nous ? <span class="sr-only">Qui sommes nous</span></a>
-          </li>
-          <li class="nav-item active ml-2">
-            <a class="nav-link text-white" href="{{ path('app_qui') }}">Nous trouver<span class="sr-only">Nous trouver</span></a>
-          </li>
-          <li class="nav-item active ml-2">
-            <a class="nav-link text-white" href="{{ path('app_qui') }}">Nos sponsors<span class="sr-only">Nos sponsors</span></a>
-          </li>
-        </ul> 
-        <ul class="navbar-nav navbar-center mr-auto">
-          <li class="nav-item ml-5">
-            {% if UserRole == 'Utilisateur' %}
-              <a class="navbar-brand nav-link btn text-white" href="{{ path('booking_index') }}">
-                <strong class="color-white" style="letter-spacing: 3px;">S'INSCRIRE</strong></a>
-            {% endif %}
-          </li>
-        </ul>
-        <ul class="navbar-nav navbar-right">
-          {% if UserId is not null %}
-              <input type="hidden" name="startDate" id="startDate" 
-              {% if UserRole == 'Administrateur' %}value="2018-01-01" {% else %}value="{{ 'now'|date_modify('+2 day')|date('Y-m-d') }}"{% endif %}>
-              <li class="nav-item ml-2">
-                <a class="nav-link text-white" href="{{ path('ateliers_profil', { 'id': UserId }) }}">Mes ateliers</a>
-              </li>            
-              <li class="nav-item ml-2">
-                <a class="nav-link text-white" href="{{ path('profil_edit', { 'id': UserId }) }}">Mes informations</a>
-              </li>       
-              {% if UserRole == 'Administrateur' %}
-                <li class="nav-item dropdown ml-2">
-                  <a class="nav-link dropdown-toggle text-white bold" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-users-cog"></i> Admin</a>
-                  <div class="dropdown-menu border rounded bg-light-gray">
-                    <a class="dropdown-item" href="{{ path('booking_index') }}"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;Calendrier</a>
-                    <a class="dropdown-item" href="{{ path('booking_valid') }}"><i class="far fa-calendar-check"></i>&nbsp;&nbsp;Ateliers à valider</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ path('user_index') }}"><i class="fas fa-users"></i>&nbsp;&nbsp;Liste des utilisateurs</a>
-                    <a class="dropdown-item" href="{{ path('booking_list') }}"><i class="far fa-list-alt"></i>&nbsp;&nbsp;Liste des ateliers</a>
-                    <a class="dropdown-item" href="{{ path('recette_index') }}"><img style="height:20px;width:20px;object-fit:cover;border-radius:20%;" src="{{ asset('img/recettes.png') }}" alt="">&nbsp;&nbsp;Liste des recettes</a>
-                    <a class="dropdown-item" href="{{ path('ingredients_index') }}"><i class="fas fa-carrot"></i>&nbsp;&nbsp;Liste des ingrédients</a>
-                    <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#multi"><i class="far fa-calendar-alt"></i>&nbsp;&nbsp;Créer plusieurs ateliers</a>
-                  </div>
-                </li>            
-              {% endif %}                      
-              <li class="nav-item dropdown ml-2">
-                <a  class="nav-link dropdown-toggle text-white" data-toggle="dropdown" href="#" role="button" 
-                    aria-haspopup="true" aria-expanded="false"
-                    style="font-weight:600;"><i class="far fa-user"></i> {{ app.user.prenom ~ " " ~ app.user.nom }}</a>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="{{ path('booking_index') }}"><i class="far fa-calendar-alt"></i> Calendrier</a>
-                  <a class="dropdown-item" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
-                </div>
-              </li>
-          {% else %}
-              <li class="navbar-nav active">
-                <a class="nav-link btn text-white" href="{{ path('booking_index') }}">Se connecter<span class="sr-only bg-Success"></span></a>
-              </li>
-          {% endif %}
-        </ul>
-        #}
-        {# <ul class="navbar-right">
-            <li class="navbar-nav active">
-              {% if UserId is not null %}
-                <a class="nav-link btn btn-outline-danger" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> Déconnexion<span class="sr-only bg-danger"></span></a>
-              {% else %}
-                <a class="nav-link btn btn-outline-success" href="{{ path('booking_index') }}">Se connecter<span class="sr-only bg-Success"></span></a>
-              {% endif %}
-            </li>
-        </ul> #}
-        {# <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Rechercher">
-          <button class="btn btn-secondary my-2 my-sm-0" type="submit">Recherche</button>
-        </form> #}
-      </div>
-    </nav>
+      {# {% include "navbar.html.twig" %} #}
       <input  id="rdvIndex"  type="hidden"
               data-link     ="{{ path('patient_index') }}" 
               data-userId   ="{{ UserId ?? '' }}"
@@ -152,36 +52,46 @@
       {# END ATELIER MUTLI MDAL #}
       <div class="m-1">&nbsp;</div>
   {% if block("title") is defined %}
-    <div class="container-fluid bg-white rounded shadow-lg p-3 mt-5 col-md-12 col-lg-{% if block("size") is defined %}{{ block('size') }}{% else %}10{% endif %}" >
-        {# MESSAGES #}
-        <div class="col-12">
-            {% for label, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="flash-notice alert alert-{{ label }} border rounded shadow-lg">
-                        <h4 class="mt-2 white">{{ message }}</h4>
-                    </div>
+  <div class="container-fluid bg-white rounded shadow-lg p-3 mt-5 
+              col-md-12 
+              col-lg-{% if block("size") is defined %}{{ block('size') }}{% else %}10{% endif %}" >
+        {% include "navbar.html.twig" %}    
+        {# <div class="col-1 small m-0 p-0 border border-warning" style="width:80px; overflow:auto;">
+            {% include "manu.html.twig" %}
+        </div> #}
+        {# <h5 class="text-left row small">
+            <strong>{{ block('title') }}</strong>
+        </h5> #}
+        <div class="container-fluid m-0 p-0 col-12">
+            {# TITRE #}
+            {# MESSAGES #}
+            <div class="col-12 m-0 p-0">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="flash-notice alert alert-{{ label }} border rounded shadow-lg">
+                            <h4 class="mt-2 white">{{ message }}</h4>
+                        </div>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
-            {# <div class=""><h4><strong class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</strong></h4></div> #}
-        </div>
-        {# END MESSAGES #}
-    <h5 class="text-left color-chauffatec row">
-        <strong>{{ block('title') }}</strong>
-    </h5>
+                {# <div class=""><h4><strong class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</strong></h4></div> #}
+            </div>
+            {# END MESSAGES #}
   {% endif %}
 
-    {% block body %}
-    
-    {% endblock %}
+      {% block body %}
+      
+      {% endblock %}
 
-  {% if block("title") is defined %}
-      </div>
-  {% endif %}
+    {% if block("title") is defined %}
+       </div>
+  </div>  
+    {% endif %}
 </body>
 
 {% block javascripts %}
     <script type="text/javascript" src="{{ asset('js/jquery.js') }}">                     </script>
     <script type="text/javascript" src="{{ asset('jquery-ui/jquery-ui.js') }}">           </script>
+    <script type="text/javascript" src="{{ asset('bootstrap/js/bootstrap.bundle.js') }}"> </script>
     <script type="text/javascript" src="{{ asset('bootstrap/js/bootstrap.js') }}">        </script>
     <script type="text/javascript" src="{{ asset('moment/moment.js') }}">                 </script>
     <script type="text/javascript" src="{{ asset('moment/moment-with-locales.js') }}">    </script>
@@ -210,7 +120,7 @@
     <script type="text/javascript" src="{{ asset('/js/appDataTable.js') }}">              </script>
     <script type="text/javascript" src="{{ asset('/js/appScrollReveal.js') }}">           </script>
     <script type="text/javascript" src="{{ asset('/js/appOuvertureSession.js') }}">       </script>
-    <script type="text/javascript" src="{{ asset('/js/appGoogleMap.js') }}">       </script>
+    <script type="text/javascript" src="{{ asset('/js/appGoogleMap.js') }}">              </script>
     <script type="text/javascript">
       const sr = ScrollReveal({
           reset:true
@@ -221,22 +131,67 @@
         appAlert();
         appMoment();
         appSelect2();
-        appScrollReveal();
+        // appScrollReveal();
         // appDataTable();
         appDateTimePickers();
-        /*appCalendrier();*/
+        /*appCalendrier();
         appOuvertureSession();
-        appGoogleMap();
+        appGoogleMap();*/
 
-        $.extend( $.fn.dataTable.defaults, 
+        /*$.extend( $.fn.dataTable.defaults, 
+        {/*
+        $("#accordion").show();
+        $("#accordion2").hide();
+        $("#accordion3").hide();
+        $("#DataTables_Table_0_wrapper").show();
+        $(".nav-link").on('click',function()
         {
+          console.log($(this).attr('class'));
+          console.log('clic'+$(this).attr('class'));
+          switch($(this).attr('class'))
+          {
+              case 'new':
+              case 'newConsult':
+                $("#accordion").hide();
+                $("#accordion2").show();
+                $("#accordion3").show();
+                $("#DataTables_Table_0_wrapper").hide();
+                break;
+              case 'edit':
+                $("#accordion").show();
+                $("#accordion2").hide();
+                $("#accordion3").hide();
+                $("#DataTables_Table_0_wrapper").show();
+                break;
+              case 'consultation_r':
+              case 'consultation':
+              case 'consult':
+              case 'listeConsult':
+                $("#consultation_r").hide();
+                $("#accordion").hide();
+                $("#accordion2").show();
+                $("#accordion3").show();
+                $("#DataTables_Table_0_wrapper").hide();
+                break;
+              case 'courriers':
+                $("#accordion").hide();
+                $("#DataTables_Table_0_wrapper").hide();
+                $("#accordion2").show();
+                $("#accordion3").show();
+                break;
+              case 'documents':
+                break;
+          }
+        })        */
+        $('.dataTable').DataTable({
           // searching: false,
-          "pageLength": 25,
           "lengthMenu": [ 10, 25, 50, 75, 100 ],
-          // } );
-          //   $('.dataTable').DataTable({
-            "language": 
-            {
+          'pageLength' : 30,
+          "dom": "<'row'<'col-sm-6 search-query'f><'col-sm-6'l>>" +
+                  "<'row'<'col-sm-12'tr>>" +
+                  "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+          "language": 
+          {
               "sEmptyTable":     "Aucune donnée disponible dans le tableau",
               "sInfo":           "Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
               "sInfoEmpty":      "Affichage de l'élément 0 à 0 sur 0 élément",
@@ -267,13 +222,12 @@
                   "0": "Aucune ligne sélectionnée",
                   "1": "1 ligne sélectionnée"
                 } 
-              }
-            },
+              },
+            search: "",
+            searchPlaceholder: "Rechercher"
+          }
           // "order": [[ 1, "desc" ]]
-            "dom": "<'row'<'col-sm-6 search-query'f><'col-sm-6'l>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-        });
+        });    
         // FIN DATATABLE
         
         $('#myModal').on('shown', function () 
@@ -310,6 +264,7 @@
 
         {% block jsCalendar %}{% endblock jsCalendar %}
         {% block dataTable %}{% endblock dataTable %}
+
       });
     </script>
 {% endblock %}

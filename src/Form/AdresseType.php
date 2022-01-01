@@ -42,8 +42,8 @@ class AdresseType extends AbstractType
                     ],
                 'required'      => false
             ])
-            ->add('latitude')
-            ->add('longitude')
+            // ->add('latitude')
+            // ->add('longitude')
         ;
     }
 

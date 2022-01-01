@@ -28,7 +28,7 @@ class Pediatrie
     private $poids;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $pc;
 

@@ -1,0 +1,9 @@
+{% extends 'index2/base2.html.twig' %}
+
+{% block title %}Rendez-vous{% endblock %}
+
+{% block body %}
+    {{ include('booking/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+    <a href="{{ path('booking_index') }}" class="btn btn-secondary">Retour</a>
+    {{ include('booking/_delete_form.html.twig') }}
+{% endblock %}

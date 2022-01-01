@@ -9,12 +9,40 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/user")
  */
 class UserController extends AbstractController
 {
+    
+    // /**
+    //  * @Route("/newkey", name="user_newkey", methods={"GET"})
+    //  */
+    // public function newKey(UserRepository $userRepository): Response
+    // {
+    //     $key_size = 16; // 256 bits
+    //     $encryption_key = hex2bin(openssl_random_pseudo_bytes($key_size, $strong));
+    //     dd($encryption_key);
+    // }
+    // /**
+    //  * @Route("/decrypt", name="user_decrypt", methods={"GET"})
+    //  */
+    // public function decrypt(UserRepository $userRepository): Response
+    // {
+    //     $enc_name = $this->decryptService->decrypt();
+    //     dd($enc_name);
+    // }
+    // /**
+    //  * @Route("/encrypt", name="user_encrypt", methods={"GET"})
+    //  */
+    // public function encrypt(): Response
+    // {
+    //     $enc_name = $this->decryptService->encrypt('jack');
+    //     dd($enc_name);
+    // }
+
     /**
      * @Route("/", name="user_index", methods={"GET"})
      */
@@ -61,12 +89,19 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, User $user, UserPasswordEncoderInterface $userPasswordEncoderInterface): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+            $user->setPassword(
+            $userPasswordEncoderInterface->encodePassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);

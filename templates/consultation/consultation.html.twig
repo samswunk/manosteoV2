@@ -1,0 +1,24 @@
+<div id="consultation" class="col m-0">
+    <div class="col-12 m-0 row mb-3">
+        <label  class="required col-3" for="consultation_date">Date de la consultation</label>
+        {{ form_widget(form.date,{'attr':{'class':'form-control form-control-sm datepicker col-2'}}) }}
+        <label  class="offset-1 col-3" for="consultation_domicile"> Consultation à domicile</label>
+        {{ form_widget(form.domicile,{'attr':{'class':'form-check col-3'}}) }}
+    </div>
+    <div class="col-12 m-0 row form-group">
+        <label      class="col-2 border-right" for="consultation_motif">Motif</label>
+        {{ form_widget(form.motif,{'attr':{'placeholder':' Motif de consultation','class':'form-control form-control-sm col-10'}}) }}
+    </div>
+    <div class="col-12 m-0 row form-group">
+        <label      class="col-2 border-right" for="consultation_test">Test</label>
+        {{ form_widget(form.test,{'attr':{'placeholder':' Tests','class':'form-control form-control-sm col-10'}}) }}
+    </div>
+    <div class="col-12 m-0 row form-group">
+        <label      class="col-2 border-right" for="consultation_traitement">Traitement</label>
+        {{ form_widget(form.traitement,{'attr':{'placeholder':' Traitements','class':'form-control form-control-sm col-10'}}) }}
+    </div>
+    <div class="col-12 m-0 row form-group">
+    </div>
+    {# <input type="hidden" id="consultation__token" name="consultation[_token]" value="consultation" /> #}
+{# <button class="btn btn-success col">Save</button> #}
+</div>

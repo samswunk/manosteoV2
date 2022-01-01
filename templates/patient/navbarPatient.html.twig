@@ -1,0 +1,21 @@
+<nav id="navbarPatient" class="navbar navbar-expand-sm navbar-light bg-light border rounded p-0">
+  <a class="navbar-brand" href="#">{{patient.nom}} {{patient.prenom}} </a>
+  {# {{patient.nom | nzo_decrypt}} {{patient.prenom | nzo_decrypt}} </a> #}
+  <button   class="navbar-toggler" type="button" data-toggle="collapse" data-target="#divNavbarPatient" aria-controls="divNavbarPatient" 
+            aria-expanded="false" aria-label="Toggle navigation">
+    <span   class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse p-0" id="divNavbarPatient">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active ml-2">
+        <a class="nav-link newConsult" href="{{ path('addConsultation',{'idPatient':patient.id}) }}"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Nouvelle Consultation</a>
+      </li>
+      <li class="nav-item active ml-2">
+        <a class="nav-link listeConsult" href="{{ path('consultations_liste', {'id': patient.id}) }}"><i class="far fa-list-alt"></i>&nbsp;&nbsp;Liste des Consultations</a>
+      </li>
+      <li class="nav-item active ml-2">
+        <a class="nav-link patient" href="{{ path('patient_edit', {'id': patient.id,'origine':'patient'}) }}"><i class="fas fa-users"></i>&nbsp;&nbsp;Fiche du Patient</a>
+      </li>
+    </ul>
+  </div>
+</nav>

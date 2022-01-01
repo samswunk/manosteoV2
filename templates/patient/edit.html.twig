@@ -1,13 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends 'index2/base2.html.twig' %}
 
-{% block title %}Edit Patient{% endblock %}
+{% block title %}Patient{% endblock %}
 
 {% block body %}
-    <h1>Edit Patient</h1>
-
+    {% include ('patient/navbarPatient.html.twig') %}
     {{ include('patient/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('patient_index') }}">back to list</a>
-
-    {{ include('patient/_delete_form.html.twig') }}
-{% endblock %}
+    {# <div class="col border border-danger row">
+        {% block bouton %}{% endblock %}
+        <a href="{{ path('patient_index') }}">back to list</a>
+        {{ include('patient/_delete_form.html.twig') }}
+    </div> #}
+{% endblock body %}
